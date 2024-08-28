@@ -6,11 +6,11 @@ class FadeTransitionFade extends StatefulWidget {
   final Curve curve;
 
   const FadeTransitionFade({
-    Key? key,
+    super.key,
     required this.child,
     this.duration = const Duration(seconds: 2),
     this.curve = Curves.easeInOut,
-  }) : super(key: key);
+  });
 
   @override
   _FadeTransitionFadeState createState() => _FadeTransitionFadeState();
