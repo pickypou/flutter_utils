@@ -1,42 +1,66 @@
 import 'package:flutter/material.dart';
-import 'animated_opacity_fade.dart'; // Importez le fichier d'animation
-import 'fade_transition_fade.dart'; // Importez le fichier d'animation
 
-class ImageSlider extends StatelessWidget {
+class ImageSlider extends StatefulWidget {
   final List<String> imagePaths;
-  final bool useFadeTransition;
   final Duration duration;
   final Curve curve;
+  final bool useFadeTransition;
 
   const ImageSlider({
-    super.key,
+    Key? key,
     required this.imagePaths,
-    this.useFadeTransition = false,
     this.duration = const Duration(seconds: 2),
     this.curve = Curves.easeInOut,
-  });
+    this.useFadeTransition = true,
+  }) : super(key: key);
+
+  @override
+  _ImageSliderState createState() => _ImageSliderState();
+}
+
+class _ImageSliderState extends State<ImageSlider>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: widget.duration,
+      vsync: this,
+    );
+    _animation = CurvedAnimation(parent: _controller, curve: widget.curve);
+
+    // Démarre l'animation initiale
+    _controller.forward();
+
+    // Écoute la fin de l'animation pour changer l'image
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        setState(() {
+          _currentIndex = (_currentIndex + 1) % widget.imagePaths.length;
+        });
+        _controller.forward(from: 0.0);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      itemCount: imagePaths.length,
-      itemBuilder: (context, index) {
-        final image = Image.asset(imagePaths[index]);
-
-        if (useFadeTransition) {
-          return FadeTransitionFade(
-            duration: duration,
-            curve: curve,
-            child: image,
-          );
-        } else {
-          return AnimatedOpacityFade(
-            duration: duration,
-            curve: curve,
-            child: image,
-          );
-        }
-      },
+    return FadeTransition(
+      opacity: _animation,
+      child: Image.asset(
+        widget.imagePaths[_currentIndex],
+        fit: BoxFit.cover,
+      ),
     );
   }
 }
