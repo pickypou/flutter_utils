@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../flutter_utils.dart';
 
+
 class ImageSlider extends StatefulWidget {
   final List<String> imagePaths;
   final Duration duration;
   final Curve curve;
-  final bool useFadeTransition; // Indique quelle animation utiliser
+  final bool useFadeTransition;
 
   const ImageSlider({
     Key? key,
@@ -23,21 +24,25 @@ class ImageSlider extends StatefulWidget {
 class _ImageSliderState extends State<ImageSlider>
     with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
+  bool _isFirstImage = true;
 
   @override
   void initState() {
     super.initState();
+    _startImageChangeTimer();
+  }
 
-    // Changer d'image à intervalles réguliers
+  void _startImageChangeTimer() {
     Future.delayed(widget.duration, _changeImage);
   }
 
   void _changeImage() {
     setState(() {
+      _isFirstImage = !_isFirstImage;
       _currentIndex = (_currentIndex + 1) % widget.imagePaths.length;
     });
 
-    Future.delayed(widget.duration, _changeImage);
+    _startImageChangeTimer(); // Redémarre le timer pour changer l'image régulièrement
   }
 
   @override
