@@ -25,15 +25,15 @@ class ImageSlider extends StatelessWidget {
 
         if (useFadeTransition) {
           return FadeTransitionFade(
-            child: image,
             duration: duration,
             curve: curve,
+            child: image,
           );
         } else {
           return AnimatedOpacityFade(
-            child: image,
             duration: duration,
             curve: curve,
+            child: image,
           );
         }
       },

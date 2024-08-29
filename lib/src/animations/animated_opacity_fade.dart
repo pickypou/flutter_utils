@@ -6,11 +6,11 @@ class AnimatedOpacityFade extends StatefulWidget {
   final Curve curve;
 
   const AnimatedOpacityFade({
-    Key? key,
+    super.key,
     required this.child,
     this.duration = const Duration(seconds: 2),
     this.curve = Curves.easeInOut,
-  }) : super(key: key);
+  });
 
   @override
   _AnimatedOpacityFadeState createState() => _AnimatedOpacityFadeState();
