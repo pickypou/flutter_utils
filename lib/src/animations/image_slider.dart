@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../flutter_utils.dart';
+
 class ImageSlider extends StatefulWidget {
   final List<String> imagePaths;
   final Duration duration;
   final Curve curve;
-  final bool useFadeTransition;
+  final bool useFadeTransition; // Indique quelle animation utiliser
 
   const ImageSlider({
     Key? key,
@@ -20,47 +22,41 @@ class ImageSlider extends StatefulWidget {
 
 class _ImageSliderState extends State<ImageSlider>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
   int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: widget.duration,
-      vsync: this,
-    );
-    _animation = CurvedAnimation(parent: _controller, curve: widget.curve);
 
-    // Démarre l'animation initiale
-    _controller.forward();
-
-    // Écoute la fin de l'animation pour changer l'image
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        setState(() {
-          _currentIndex = (_currentIndex + 1) % widget.imagePaths.length;
-        });
-        _controller.forward(from: 0.0);
-      }
-    });
+    // Changer d'image à intervalles réguliers
+    Future.delayed(widget.duration, _changeImage);
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+  void _changeImage() {
+    setState(() {
+      _currentIndex = (_currentIndex + 1) % widget.imagePaths.length;
+    });
+
+    Future.delayed(widget.duration, _changeImage);
   }
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _animation,
-      child: Image.asset(
-        widget.imagePaths[_currentIndex],
-        fit: BoxFit.cover,
-      ),
+    final imageWidget = Image.asset(
+      widget.imagePaths[_currentIndex],
+      fit: BoxFit.cover,
+    );
+
+    return widget.useFadeTransition
+        ? FadeTransitionFade(
+      duration: widget.duration,
+      curve: widget.curve,
+      child: imageWidget,
+    )
+        : AnimatedOpacityFade(
+      duration: widget.duration,
+      curve: widget.curve,
+      child: imageWidget,
     );
   }
 }
