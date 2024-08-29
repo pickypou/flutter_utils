@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_utils/flutter_utils.dart';
 
+import '../../flutter_utils.dart';
 
 class ImageSlider extends StatefulWidget {
   final List<String> imagePaths;

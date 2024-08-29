@@ -16,25 +16,41 @@ class AnimatedOpacityFade extends StatefulWidget {
   _AnimatedOpacityFadeState createState() => _AnimatedOpacityFadeState();
 }
 
-class _AnimatedOpacityFadeState extends State<AnimatedOpacityFade> {
-  double _opacity = 0.0;
+class _AnimatedOpacityFadeState extends State<AnimatedOpacityFade> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () {
-      setState(() {
-        _opacity = 1.0;
-      });
-    });
+    _controller = AnimationController(
+      duration: widget.duration,
+      vsync: this,
+    );
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: widget.curve,
+    );
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      opacity: _opacity,
-      duration: widget.duration,
-      curve: widget.curve,
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _animation.value,
+          child: child,
+        );
+      },
       child: widget.child,
     );
   }
