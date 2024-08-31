@@ -7,12 +7,15 @@ class ThemeConfig {
   static Color secondaryColor = const Color(0xFF000000);
   static Color textColor = Colors.white;
 
+  // Police configurables
+  static String fontFamily = 'Lora';
+
   // Styles de texte configurables
   static TextStyle titleStyle(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     double titleFontSize = size.width / 11;
 
-    return GoogleFonts.lora().copyWith(
+    return GoogleFonts.getFont(fontFamily).copyWith(
       fontSize: titleFontSize,
       color: secondaryColor,
       fontWeight: FontWeight.bold,
@@ -24,7 +27,7 @@ class ThemeConfig {
     Size size = MediaQuery.sizeOf(context);
     double titleFontSize = size.width / 12;
 
-    return GoogleFonts.lora().copyWith(
+    return GoogleFonts.getFont(fontFamily).copyWith(
       fontSize: titleFontSize,
       fontWeight: FontWeight.bold,
       color: secondaryColor,
@@ -36,7 +39,7 @@ class ThemeConfig {
     Size size = MediaQuery.sizeOf(context);
     double titleFontSize = size.width / 20;
 
-    return GoogleFonts.lora().copyWith(
+    return GoogleFonts.getFont(fontFamily).copyWith(
       fontSize: titleFontSize,
       fontWeight: FontWeight.bold,
       color: secondaryColor,
@@ -48,7 +51,7 @@ class ThemeConfig {
     Size size = MediaQuery.sizeOf(context);
     double textFontSize = size.width / 90;
 
-    return GoogleFonts.lora().copyWith(
+    return GoogleFonts.getFont(fontFamily).copyWith(
       fontSize: textFontSize,
       color: textColor,
       decoration: TextDecoration.none,
