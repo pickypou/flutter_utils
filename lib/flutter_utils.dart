@@ -7,3 +7,4 @@ export 'src/theme/theme_config.dart';
 export 'src/animations/animated_opacity_fade.dart';
 export 'src/animations/fade_transition_fade.dart';
 export 'src/animations/image_slider.dart';
+export 'src/widget/image_carousel/image_carousel.dart';

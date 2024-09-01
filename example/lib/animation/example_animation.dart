@@ -6,8 +6,9 @@ class ExampleAnimation extends StatelessWidget {
    ExampleAnimation({super.key,});
 
   final List<String> images = [
-    'assets/images/images.png',
-    'assets/images/flutter.png',
+    'assets/images/img3.png',
+    'assets/images/img2.png'
+    'assets/images/img1.png',
   ];
 
 

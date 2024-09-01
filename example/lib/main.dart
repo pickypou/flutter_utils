@@ -1,7 +1,8 @@
+import 'package:example/widget/carousel/example_image_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/flutter_utils.dart';
 
-import 'animation/ExampleAnimation.dart';
+import 'animation/example_animation.dart';
 
 void main() {
   // configure les valeur de théme pout le projet
@@ -41,6 +42,8 @@ class MyHomePage extends StatelessWidget {
           ),
            const SizedBox(height: 50,),
            ExampleAnimation(),
+          const SizedBox(height: 50,),
+          const ExampleImageCarousel()
         ],
       ),
     );
