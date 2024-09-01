@@ -96,7 +96,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: ffc98d798bf53c307c7a87eb659ce936e79d9e47
+      resolved-ref: d080279bd18662bd2df659835c4009cc6c84b9e5
       url: "https://github.com/pickypou/flutter_utils.git"
     source: git
     version: "0.0.1"

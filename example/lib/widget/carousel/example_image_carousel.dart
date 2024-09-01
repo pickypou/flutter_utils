@@ -7,19 +7,19 @@ class ExampleImageCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Liste d'images à afficher dans le carousel
-    final List<String> images = [
-      'assets/images/img1.png',
-      'assets/images/img2.png',
-      'assets/images/img3.png'
-    ];
-    return  const Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
 
-        ],
+    return   SizedBox(
+      child:  Center(
+
+        child:
+            ImagesCarousel(
+              imageUrls: [
+                "assets/images/img1.png",
+                "assets/images/img2.png",
+                "assets/images/img3.png"
+              ]
+
+            ),
       ),
     );
   }

@@ -1,43 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart'; // Assurez-vous d'importer le package carousel_slider
 
+class ImageCarousel extends StatelessWidget {
+  final List<String> imageUrls;
 
-class ImagesCarousel extends StatelessWidget {
-  final List<String> imagePaths;//Les chemins des images à afficher
-  final double spacing; //L'espacement entre chaque image
-  final double imageHeight;// hauter des l'images
-  final double imageWidth;// Largeur des images
-  final Duration duration;//Durée de l'animation de défilement
-
-  const ImagesCarousel({
-    super.key,
-    required this.imagePaths,
-    required this.spacing,
-    required this.imageHeight,
-    required this.imageWidth,
-    required this.duration
-  });
+  // Le constructeur utilise un paramètre nommé
+  const ImageCarousel({super.key, required this.imageUrls});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children:
-          imagePaths.map((path){
-            return Padding(
-                padding: EdgeInsets.symmetric(horizontal: spacing / 2),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Image.asset(
-                  path,
-                  height: imageHeight,
-                  width: imageWidth,
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: MediaQuery.of(context).size.height * 0.4, // Hauteur du carousel (40% de la hauteur de l'écran)
+        autoPlay: true,
+        aspectRatio: 4/3, // Ratio pour l'aspect du carousel
+        enlargeCenterPage: true,
+        viewportFraction: 0.2, // Ajuste la largeur du carousel
+      ),
+      items: imageUrls.map((url) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.symmetric(horizontal: 5.0),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(url),
                   fit: BoxFit.cover,
                 ),
               ),
             );
-          }).toList(),
-      ),
+          },
+        );
+      }).toList(),
     );
   }
 }
