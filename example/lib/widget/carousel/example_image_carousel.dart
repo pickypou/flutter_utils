@@ -8,18 +8,17 @@ class ExampleImageCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return   SizedBox(
+    return   const SizedBox(
       child:  Center(
-
         child:
-            ImagesCarousel(
+          ImageCarousel(
               imageUrls: [
                 "assets/images/img1.png",
                 "assets/images/img2.png",
-                "assets/images/img3.png"
+                "assets/images/img3.png",
               ]
 
-            ),
+          ),
       ),
     );
   }

@@ -8,12 +8,13 @@ class ExampleAnimation extends StatelessWidget {
 
   final List<String> images = [
     'assets/images/img3.png',
-    'assets/images/img2.png'
+    'assets/images/img2.png',
         'assets/images/img1.png',
   ];
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.sizeOf(context);
     return SizedBox(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -23,15 +24,17 @@ class ExampleAnimation extends StatelessWidget {
             'Example d\'animation',
             style: ThemeConfig.textStyleText(context),
           ),
-          const SizedBox(
-            height: 35,
-          ),
+           SizedBox(
+            width: size.width,
+            height: 235,
+          child:
           ImageSlider(
             imagePaths: images,
-            useFadeTransition: false,
+            useFadeTransition: true,
             duration: const Duration(seconds: 3),
             curve: Curves.easeInOut,
           )
+          ),
         ],
       ),
     );
