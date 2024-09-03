@@ -1,4 +1,5 @@
 import 'package:example/widget/carousel/example_image_carousel.dart';
+import 'package:example/widget/example_custom_text_field/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/flutter_utils.dart';
 
@@ -47,6 +48,8 @@ class MyHomePage extends StatelessWidget {
              ExampleAnimation(),
             const SizedBox(height: 50),
             const ExampleImageCarousel(),
+            const SizedBox(height: 50,),
+            const ExampleCustomTextField(),
           ],
         ),
       ),
