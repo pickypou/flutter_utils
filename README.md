@@ -1,4 +1,4 @@
-3 # flutter_utils
+ # flutter_utils
 
 'flutter_utils' est un package Flutter qui propose une collection de widgets réutilisables, d'animations et de fonctions utilitaires pour vous aider à simplifier votre processus de développement Flutter.
 
