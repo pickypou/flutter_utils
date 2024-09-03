@@ -110,11 +110,11 @@ Widget build(BuildContext context) {
  }
 ```
 **Projet Exemple**
-Pour plus d'exemples, consultez le répertoire [example(https://chatgpt.com/c/a68dae08-a5f9-40e8-9893-b2b775857346)] dans le dépôt. Vous pouvez exécuter le projet exemple pour voir tous les composants en action.
+Pour plus d'exemples, consultez le répertoire [example](https://chatgpt.com/c/a68dae08-a5f9-40e8-9893-b2b775857346) dans le dépôt. Vous pouvez exécuter le projet exemple pour voir tous les composants en action.
 
 **Contribution**
 
 Les contribution sont les bien venues! Si vous trouvez un bug ou avez une suggestion de fonctionnalitté, n'hésitez pas à créé une issue ou à soumettre une pull request.
 
 **Licence**
-Ce projet est sous licence MIT. Voir le fichier [LICENCE(https://github.com/pickypou/flutter_utils/blob/main/LICENSE)] pour plus de détails.
+Ce projet est sous licence MIT. Voir le fichier [LICENCE](https://github.com/pickypou/flutter_utils/blob/main/LICENSE) pour plus de détails.
