@@ -49,7 +49,7 @@ class ThemeConfig {
 
   static TextStyle titleStyleSmall(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    double titleFontSize = size.white /50;
+    double titleFontSize = size.width /50;
 
     return GoogleFonts.getFont(fontFamily).copyWith(
       fontSize: titleFontSize,
