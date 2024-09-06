@@ -47,6 +47,18 @@ class ThemeConfig {
     );
   }
 
+  static TextStyle titleStyleSmall(BuildeContext context) {
+    Size size = MediaQuery.sizeOf(context);
+    double titleFontSize = size.white /50;
+
+    return GoogleFonts.getFont(fontFamily).copyWith(
+      fontSize: titleFontSize,
+      fontWeight: FontWeight.bold,
+      color: secondaryColor,
+      decoration: TextDecoration.none,
+    );
+  }
+
   static TextStyle textStyleText(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     double textFontSize = size.width / 90;
