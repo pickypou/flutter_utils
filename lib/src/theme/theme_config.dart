@@ -47,7 +47,7 @@ class ThemeConfig {
     );
   }
 
-  static TextStyle titleStyleSmall(BuildeContext context) {
+  static TextStyle titleStyleSmall(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     double titleFontSize = size.white /50;
 
