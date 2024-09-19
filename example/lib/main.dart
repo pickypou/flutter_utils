@@ -1,5 +1,5 @@
+import 'package:example/example_oval_speech_bubble/example_oval_speech_bubble.dart';
 import 'package:example/models/hike.dart';
-import 'package:example/widget/carousel/example_image_carousel.dart';
 import 'package:example/widget/example_custom_text_field/example_custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/flutter_utils.dart';
@@ -56,12 +56,10 @@ class MyHomePage extends StatelessWidget {
               ExampleAnimation(),
               const SizedBox(height: 50),
               // Utilisation de SizedBox ou Expanded pour limiter la taille
-              SizedBox(
-                height: 300,  // Par exemple une hauteur fixe
-                child: ExampleImageCarousel(hike: hike),
-              ),
+
               const SizedBox(height: 50),
               const ExampleCustomTextField(),
+              const ExampleOvalSpeechBubble()
             ],
           ),
         ),
