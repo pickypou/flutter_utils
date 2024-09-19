@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/flutter_utils.dart';
 
-
 class ExampleAnimation extends StatelessWidget {
-  ExampleAnimation({Key? key}) : super(key: key);
+  ExampleAnimation({super.key});
 
   final List<String> images = [
     'assets/images/img3.png',
+    'assets/images/img2.png'
+        'assets/images/img1.png',
     'assets/images/img2.png',
     'assets/images/img1.png',
   ];
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    return Column(
+    return SizedBox(
+        child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          'Exemple d\'animation',
+          'Example d\'animation',
           style: ThemeConfig.textStyleText(context),
         ),
-        SizedBox(
-          width: size.width,
-          height: 235,
-          child: ImageSlider(
-            imagePaths: images,
-            duration: const Duration(seconds: 3),
-            curve: Curves.easeInOut,
-          ),
+        const SizedBox(
+          height: 35,
+        ),
+        ImageSlider(
+          imagePaths: images,
+          useFadeTransition: true,
+          duration: const Duration(seconds: 2),
+          curve: Curves.easeInOut,
         ),
       ],
-    );
+    ));
   }
 }
