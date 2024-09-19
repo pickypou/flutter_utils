@@ -8,3 +8,4 @@ export 'src/animations/animated_opacity_fade.dart';
 export 'src/animations/fade_transition_fade.dart';
 export 'src/animations/image_slider.dart';
 export 'src/widget/image_carousel/image_carousel.dart';
+export 'src/widget/custom_text_field/custom_text_field.dart';
