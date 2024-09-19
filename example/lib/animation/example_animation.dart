@@ -9,7 +9,7 @@ class ExampleAnimation extends StatelessWidget {
   final List<String> images = [
     'assets/images/img3.png',
     'assets/images/img2.png'
-        'assets/images/img1.png',
+    'assets/images/img1.png',
   ];
 
   @override
@@ -28,8 +28,8 @@ class ExampleAnimation extends StatelessWidget {
           ),
           ImageSlider(
             imagePaths: images,
-            useFadeTransition: false,
-            duration: const Duration(seconds: 3),
+            useFadeTransition: true,
+            duration: const Duration(seconds: 2),
             curve: Curves.easeInOut,
           )
         ],
