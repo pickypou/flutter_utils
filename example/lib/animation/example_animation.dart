@@ -6,7 +6,7 @@ class ExampleAnimation extends StatelessWidget {
 
   final List<String> images = [
     'assets/images/img3.png',
-    'assets/images/img2.png'
+    'assets/images/img2.png',
         'assets/images/img1.png',
     'assets/images/img2.png',
     'assets/images/img1.png',

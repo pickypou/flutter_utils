@@ -1,4 +1,4 @@
-import 'package:example/example_oval_speech_bubble/example_oval_speech_bubble.dart';
+import 'package:example/example_svg_custom_painter/example_svg_custom_painter.dart';
 import 'package:example/models/hike.dart';
 import 'package:example/widget/example_custom_text_field/example_custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +59,7 @@ class MyHomePage extends StatelessWidget {
 
               const SizedBox(height: 50),
               const ExampleCustomTextField(),
-              const ExampleOvalSpeechBubble()
+              const ExampleSvgCustomPainter()
             ],
           ),
         ),
