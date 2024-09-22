@@ -7,6 +7,8 @@ class BubbleConfig {
   final TextStyle textStyle;
   final double width;
   final double height;
+  final double textXOffset; // Nouveau paramètre
+  final double textYOffset; // Nouveau paramètre
 
   BubbleConfig({
     required this.borderColor,
@@ -15,6 +17,8 @@ class BubbleConfig {
     required this.textStyle,
     required this.width,
     required this.height,
+    this.textXOffset = 0, // Valeur par défaut
+    this.textYOffset = 0, // Valeur par défaut
   });
 }
 
@@ -73,9 +77,8 @@ class SvgCustomPainter extends CustomPainter {
     textPainter.layout(minWidth: 0, maxWidth: size.width * 0.8); // 80% de la largeur pour le texte
 
     // Calculer la position du texte au centre de la bulle
-    final double textX = (size.width - textPainter.width) / 2;
-    final double textY = (size.height - textPainter.height) / 2;
-
+    final double textX = (size.width - textPainter.width) / 2 + config.textXOffset;
+    final double textY = (size.height - textPainter.height) / 2 + config.textYOffset;
     textPainter.paint(canvas, Offset(textX, textY));
   }
 
