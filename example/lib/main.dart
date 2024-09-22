@@ -59,6 +59,7 @@ class MyHomePage extends StatelessWidget {
 
               const SizedBox(height: 50),
               const ExampleCustomTextField(),
+              const SizedBox(height: 50),
               const ExampleSvgCustomPainter()
             ],
           ),

@@ -60,7 +60,7 @@ class SvgCustomPainter extends CustomPainter {
     canvas.drawPath(path, fillPaint);
     canvas.drawPath(path, paint);
 
-    // Ajouter le texte centré
+    // Ajouter le texte centré et adapté à la bulle
     final textSpan = TextSpan(
       text: config.text,
       style: config.textStyle,
@@ -72,12 +72,14 @@ class SvgCustomPainter extends CustomPainter {
       textDirection: TextDirection.ltr,
     );
 
-    textPainter.layout(minWidth: 0, maxWidth: config.width * 0.9); // 90% de la largeur pour le texte
+    // Adapter le texte à l'intérieur de la bulle
+    double textMaxWidth = config.width * 0.8; // Réduire légèrement la largeur du texte
+    textPainter.layout(minWidth: 0, maxWidth: textMaxWidth);
 
+    // Calcul de la position pour centrer le texte
     final double textX = (config.width - textPainter.width) / 2;
     final double textY = (config.height - textPainter.height) / 2;
 
-    canvas.translate(-textX, -textY); // Ajuster la position du canvas pour le texte
     textPainter.paint(canvas, Offset(textX, textY));
 
     canvas.restore();
@@ -86,6 +88,3 @@ class SvgCustomPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
-
-
-
