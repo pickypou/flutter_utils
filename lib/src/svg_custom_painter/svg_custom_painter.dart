@@ -36,31 +36,28 @@ class SvgCustomPainter extends CustomPainter {
 
     final Path path = Path();
 
-    // Utiliser les dimensions fournies dans config
-    double scaleX = size.width / config.width;
-    double scaleY = size.height / config.height;
+    // Échelle basée sur la taille actuelle disponible (plus besoin de scaleX et scaleY)
+    double width = size.width;
+    double height = size.height;
 
-    canvas.save();
-    canvas.scale(scaleX, scaleY);
-
-    // Tracer la bulle (ajusté pour utiliser les dimensions complètes)
-    path.moveTo(9.49, 63.833);
-    path.cubicTo(7.997, 63.833, 6.547, 63.593, 5.181, 63.12);
-    path.lineTo(2.068, 62.043);
-    path.lineTo(4.46, 59.778);
-    path.cubicTo(7.625, 56.781, 8.424, 53.323, 8.476, 50.732);
-    path.cubicTo(3.004, 44.666, 0, 37.097, 0, 29.334);
-    path.cubicTo(0, 10.311, 20.645, 0.834, 50.333, 0.834);
-    path.cubicTo(80.021, 0.834, 100.667, 10.311, 100.667, 29.334);
-    path.cubicTo(100.667, 48.356, 80.021, 63.832, 50.333, 63.832);
-    path.cubicTo(43.875, 63.832, 37.506, 62.433, 31.828, 59.775);
-    path.cubicTo(18.689, 61.289, 14.366, 63.833, 9.49, 63.833);
+    // Tracer la bulle proportionnellement à la nouvelle taille
+    path.moveTo(9.49 / 100 * width, 63.833 / 100 * height);
+    path.cubicTo(7.997 / 100 * width, 63.833 / 100 * height, 6.547 / 100 * width, 63.593 / 100 * height, 5.181 / 100 * width, 63.12 / 100 * height);
+    path.lineTo(2.068 / 100 * width, 62.043 / 100 * height);
+    path.lineTo(4.46 / 100 * width, 59.778 / 100 * height);
+    path.cubicTo(7.625 / 100 * width, 56.781 / 100 * height, 8.424 / 100 * width, 53.323 / 100 * height, 8.476 / 100 * width, 50.732 / 100 * height);
+    path.cubicTo(3.004 / 100 * width, 44.666 / 100 * height, 0, 37.097 / 100 * height, 0, 29.334 / 100 * height);
+    path.cubicTo(0, 10.311 / 100 * height, 20.645 / 100 * width, 0.834 / 100 * height, 50.333 / 100 * width, 0.834 / 100 * height);
+    path.cubicTo(80.021 / 100 * width, 0.834 / 100 * height, 100.667 / 100 * width, 10.311 / 100 * height, 100.667 / 100 * width, 29.334 / 100 * height);
+    path.cubicTo(100.667 / 100 * width, 48.356 / 100 * height, 80.021 / 100 * width, 63.832 / 100 * height, 50.333 / 100 * width, 63.832 / 100 * height);
+    path.cubicTo(43.875 / 100 * width, 63.832 / 100 * height, 37.506 / 100 * width, 62.433 / 100 * height, 31.828 / 100 * width, 59.775 / 100 * height);
+    path.cubicTo(18.689 / 100 * width, 61.289 / 100 * height, 14.366 / 100 * width, 63.833 / 100 * height, 9.49 / 100 * width, 63.833 / 100 * height);
 
     path.close();
     canvas.drawPath(path, fillPaint);
     canvas.drawPath(path, paint);
 
-    // Ajouter le texte centré et adapté à la bulle
+    // Ajouter le texte centré
     final textSpan = TextSpan(
       text: config.text,
       style: config.textStyle,
@@ -72,17 +69,14 @@ class SvgCustomPainter extends CustomPainter {
       textDirection: TextDirection.ltr,
     );
 
-    // Adapter le texte à l'intérieur de la bulle
-    double textMaxWidth = config.width * 0.8; // Réduire légèrement la largeur du texte
-    textPainter.layout(minWidth: 0, maxWidth: textMaxWidth);
+    // Ajuster la largeur et la hauteur du texte pour qu'il tienne dans la bulle
+    textPainter.layout(minWidth: 0, maxWidth: size.width * 0.8); // 80% de la largeur pour le texte
 
-    // Calcul de la position pour centrer le texte
-    final double textX = (config.width - textPainter.width) / 2;
-    final double textY = (config.height - textPainter.height) / 2;
+    // Calculer la position du texte au centre de la bulle
+    final double textX = (size.width - textPainter.width) / 2;
+    final double textY = (size.height - textPainter.height) / 2;
 
     textPainter.paint(canvas, Offset(textX, textY));
-
-    canvas.restore();
   }
 
   @override

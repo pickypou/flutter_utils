@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/flutter_utils.dart';
-import 'svg_custom_painter.dart'; // Assurez-vous d'importer votre fichier
 
-class ExampleSvgCustomPainter extends StatelessWidget {
-  const ExampleSvgCustomPainter({super.key});
+import '../../theme.dart';
+
+class BulleDialogue extends StatelessWidget {
+  const BulleDialogue({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
     return Container(
-      width: 300, // Taille de la bulle
-      height: 300,
+      width: size.width / 4,
+      height: 700,
       child: CustomPaint(
         painter: SvgCustomPainter(
           config: BubbleConfig(
-            borderColor: Theme.of(context).colorScheme.secondary,
+            borderColor: theme.colorScheme.secondary,
             fillColor: Colors.transparent,
-            text: 'Je suis là pour vous aider à retrouver équilibre, relaxation & bien-être. Que vous souffriez de maux physiques ou émotionnels.',
-            textStyle: TextStyle(
-              color: Colors.blue,
-              fontSize: 16,
-            ),
-            width: 300, // Assurez-vous que la largeur est en cohérence avec le conteneur
-            height: 300,
+            text: '\"je suis là pour vous aider à retrouver équilibre, relaxation & bien-être. Que vous souffriez de maux physiques ou émotionnels\"',
+            textStyle: textStyleTextAccueil(context), // Utilisez votre style de texte ici
+            width: size.width / 4,
+            height: 700,
           ),
         ),
       ),
