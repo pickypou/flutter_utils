@@ -5,6 +5,8 @@ class ImageSlider extends StatefulWidget {
   final Duration duration;
   final Curve curve;
   final bool useFadeTransition;
+  final double? width;
+  
 
   const ImageSlider({
     Key? key,
@@ -12,6 +14,7 @@ class ImageSlider extends StatefulWidget {
     this.duration = const Duration(seconds: 3),
     this.curve = Curves.easeInOut,
     this.useFadeTransition = true,
+    this.width,
   }) : super(key: key);
 
   @override
@@ -54,6 +57,7 @@ class _ImageSliderState extends State<ImageSlider> {
         widget.imagePaths[_currentIndex],
         fit: BoxFit.cover,
         key: ValueKey<int>(_currentIndex),
+        width: widget.width,
       ),
     );
   }
