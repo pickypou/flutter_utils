@@ -9,13 +9,13 @@ class ImageSlider extends StatefulWidget {
   
 
   const ImageSlider({
-    Key? key,
+    super.key,
     required this.imagePaths,
     this.duration = const Duration(seconds: 3),
     this.curve = Curves.easeInOut,
     this.useFadeTransition = true,
     this.width,
-  }) : super(key: key);
+  });
 
   @override
   _ImageSliderState createState() => _ImageSliderState();

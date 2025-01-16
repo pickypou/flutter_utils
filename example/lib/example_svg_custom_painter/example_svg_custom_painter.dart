@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/flutter_utils.dart';
-import '../../theme_config.dart';
 
 
 class ExampleSvgCustomPainter extends StatelessWidget {
@@ -19,7 +18,7 @@ class ExampleSvgCustomPainter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: width,
       height: height,
       child: CustomPaint(
