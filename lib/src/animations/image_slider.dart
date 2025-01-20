@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class ImageSlider extends StatefulWidget {
   final List<String> imagePaths;
@@ -6,7 +7,6 @@ class ImageSlider extends StatefulWidget {
   final Curve curve;
   final bool useFadeTransition;
   final double? width;
-  
 
   const ImageSlider({
     super.key,
@@ -23,6 +23,7 @@ class ImageSlider extends StatefulWidget {
 
 class _ImageSliderState extends State<ImageSlider> {
   int _currentIndex = 0;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -30,15 +31,21 @@ class _ImageSliderState extends State<ImageSlider> {
     _startImageChangeTimer();
   }
 
-  void _startImageChangeTimer() {
-    Future.delayed(widget.duration, _changeImage);
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
-  void _changeImage() {
-    setState(() {
-      _currentIndex = (_currentIndex + 1) % widget.imagePaths.length;
+  void _startImageChangeTimer() {
+    _timer = Timer(widget.duration, () {
+      if (mounted) {
+        setState(() {
+          _currentIndex = (_currentIndex + 1) % widget.imagePaths.length;
+        });
+        _startImageChangeTimer();
+      }
     });
-    _startImageChangeTimer();
   }
 
   @override
@@ -48,10 +55,12 @@ class _ImageSliderState extends State<ImageSlider> {
       switchInCurve: widget.curve,
       switchOutCurve: widget.curve,
       transitionBuilder: (Widget child, Animation<double> animation) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
+        return widget.useFadeTransition
+            ? FadeTransition(
+                opacity: animation,
+                child: child,
+              )
+            : child;
       },
       child: Image.asset(
         widget.imagePaths[_currentIndex],
