@@ -7,8 +7,11 @@ class ImageCarousel extends StatelessWidget {
   final double height;
   final double fraction;
   final bool autoPlay;
-  final bool isFromAssets; // Nouveau paramètre pour différencier les images
+  final bool isFromAssets;
   final Widget? animation;
+  final int? cropImageIndex; // Index de l'image à recadrer
+  final double? cropOffsetY; // Décalage vertical pour le recadrage
+  final double? cropHeightFactor; // Facteur de hauteur pour le recadrage
 
   const ImageCarousel({
     super.key,
@@ -18,6 +21,9 @@ class ImageCarousel extends StatelessWidget {
     required this.autoPlay,
     required this.isFromAssets,
     this.animation,
+    this.cropImageIndex, // Paramètre optionnel pour l'index de l'image à recadrer
+    this.cropOffsetY, // Paramètre optionnel pour le décalage vertical
+    this.cropHeightFactor, // Paramètre optionnel pour le facteur de hauteur
   });
 
   @override
@@ -39,24 +45,30 @@ class ImageCarousel extends StatelessWidget {
           final String url = entry.value;
 
           return Builder(builder: (BuildContext context) {
-            // Appliquer un recadrage uniquement à la deuxième image (index 1)
-            if (index == 1) {
+            // Appliquer un recadrage si l'index correspond à cropImageIndex
+            if (cropImageIndex != null && index == cropImageIndex) {
               return Container(
                 width: size.width * (isLandscape ? fraction : 1),
                 margin: const EdgeInsets.symmetric(horizontal: 5.0),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
-                child: Transform.translate(
-                  offset: Offset(0, -50), // Déplace l'image de 50 pixels vers le haut
-                  child: isFromAssets
-                      ? Image.asset(
-                    url,
-                    fit: BoxFit.cover,
-                  )
-                      : Image.network(
-                    url,
-                    fit: BoxFit.cover,
+                child: ClipRect(
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    heightFactor: cropHeightFactor ?? 1.0, // Utiliser cropHeightFactor si fourni
+                    child: Transform.translate(
+                      offset: Offset(0, cropOffsetY ?? 0), // Utiliser cropOffsetY si fourni
+                      child: isFromAssets
+                          ? Image.asset(
+                        url,
+                        fit: BoxFit.cover,
+                      )
+                          : Image.network(
+                        url,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
               );
