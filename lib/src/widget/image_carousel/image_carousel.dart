@@ -7,17 +7,16 @@ class ImageCarousel extends StatelessWidget {
   final double height;
   final double fraction;
   final bool autoPlay;
-  final bool isFromAssets;  // Nouveau paramètre pour différencier les images
+  final bool isFromAssets; // Nouveau paramètre pour différencier les images
   final Widget? animation;
 
-  // Le constructeur utilise un paramètre nommé
   const ImageCarousel({
     super.key,
     required this.imageUrl,
     required this.height,
     required this.fraction,
     required this.autoPlay,
-    required this.isFromAssets,  // Paramètre requis pour indiquer la source des images
+    required this.isFromAssets,
     this.animation,
   });
 
@@ -35,25 +34,52 @@ class ImageCarousel extends StatelessWidget {
           viewportFraction: isLandscape ? fraction : 1.0,
           autoPlay: autoPlay,
         ),
-        items: imageUrl.map((url) {
+        items: imageUrl.asMap().entries.map((entry) {
+          final int index = entry.key;
+          final String url = entry.value;
+
           return Builder(builder: (BuildContext context) {
-            return Container(
-              width: size.width * (isLandscape ? fraction : 1),
-              margin: const EdgeInsets.symmetric(horizontal: 5.0),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
-              child: animation ??
-                  (isFromAssets
+            // Appliquer un recadrage uniquement à la deuxième image (index 1)
+            if (index == 1) {
+              return Container(
+                width: size.width * (isLandscape ? fraction : 1),
+                margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: Transform.translate(
+                  offset: Offset(0, -50), // Déplace l'image de 50 pixels vers le haut
+                  child: isFromAssets
                       ? Image.asset(
-                          url,
-                          fit: BoxFit.cover,
-                        )
+                    url,
+                    fit: BoxFit.cover,
+                  )
                       : Image.network(
-                          url,
-                          fit: BoxFit.cover,
-                        )),
-            );
+                    url,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              );
+            } else {
+              // Afficher les autres images normalement
+              return Container(
+                width: size.width * (isLandscape ? fraction : 1),
+                margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: animation ??
+                    (isFromAssets
+                        ? Image.asset(
+                      url,
+                      fit: BoxFit.cover,
+                    )
+                        : Image.network(
+                      url,
+                      fit: BoxFit.cover,
+                    )),
+              );
+            }
           });
         }).toList(),
       ),
