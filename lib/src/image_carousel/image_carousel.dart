@@ -50,7 +50,7 @@ class ImageCarousel extends StatelessWidget {
             width: size.width * (isLandscape ? fraction : 1),
             height: height,
             margin: const EdgeInsets.symmetric(horizontal: 5.0),
-            decoration: const BoxDecoration(color: Colors.white),
+            decoration: const BoxDecoration(color: Colors.transparent),
             child: Center(
               child: animation ??
                   (isFromAssets
