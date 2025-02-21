@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 import 'crop_config.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,8 @@ class ImageCarousel extends StatelessWidget {
   final Color indicatorColor;
   final ValueChanged<int>? onPageChanged;
   final GestureTapCallback? onImageTap;
+  final double height;
+  final double fraction;
 
   const ImageCarousel({
     super.key,
@@ -19,13 +22,18 @@ class ImageCarousel extends StatelessWidget {
     this.indicatorColor = Colors.white,
     this.onPageChanged,
     this.onImageTap,
+    required this.height,
+    required this.fraction,
   });
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.sizeOf(context);
+    final bool isLandscape = size.orientation() == SizeOrientation.paysage;
     return CarouselSlider(
       options: CarouselOptions(
-        height: 200,
+        height: height,
+        viewportFraction: isLandscape ? fraction : 1.0,
         autoPlay: true,
         autoPlayInterval: autoPlayInterval,
         onPageChanged: (index, reason) {
