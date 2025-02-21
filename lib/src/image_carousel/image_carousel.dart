@@ -10,7 +10,7 @@ class ImageCarousel extends StatelessWidget {
   final bool autoPlay;
   final bool isFromAssets;
   final Widget? animation;
-  final List<CropConfig> cropConfigs; // Ajout des configurations de recadrage
+  final List<CropConfig> cropConfigs; // Configurations de recadrage
 
   const ImageCarousel({
     super.key,
@@ -56,7 +56,7 @@ class ImageCarousel extends StatelessWidget {
             child: ClipRect(
               child: Align(
                 alignment: Alignment.topCenter,
-                heightFactor: 1.0, // Ajustez ce facteur pour recadrer l'image
+                heightFactor: cropConfig.heightFactor, // Utiliser heightFactor de CropConfig
                 child: Transform.translate(
                   offset: Offset(0, cropConfig.offsetY),
                   child: animation ??
