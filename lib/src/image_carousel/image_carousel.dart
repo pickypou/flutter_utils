@@ -54,39 +54,42 @@ class ImageCarousel extends StatelessWidget {
               orElse: () => CropConfig(index: -1),
             );
 
-            return GestureDetector(
-              onTap: onImageTap, // Callback pour le clic sur une image
-              child: cropConfig.index != -1
-                  ? ClipRect(
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  heightFactor: cropConfig.heightFactor,
-                  child: Transform.translate(
-                    offset: Offset(0, cropConfig.offsetY),
-                    child: isFromAssets
-                        ? Image.asset(
-                      url,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                    )
-                        : Image.network(
-                      url,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
+            return Container(
+              height: height, // Fixer la hauteur du conteneur
+              child: GestureDetector(
+                onTap: onImageTap, // Callback pour le clic sur une image
+                child: cropConfig.index != -1
+                    ? ClipRect(
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    heightFactor: cropConfig.heightFactor,
+                    child: Transform.translate(
+                      offset: Offset(0, cropConfig.offsetY),
+                      child: isFromAssets
+                          ? Image.asset(
+                        url,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      )
+                          : Image.network(
+                        url,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      ),
                     ),
                   ),
+                )
+                    : isFromAssets
+                    ? Image.asset(
+                  url,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                )
+                    : Image.network(
+                  url,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
                 ),
-              )
-                  : isFromAssets
-                  ? Image.asset(
-                url,
-                fit: BoxFit.cover,
-                width: double.infinity,
-              )
-                  : Image.network(
-                url,
-                fit: BoxFit.cover,
-                width: double.infinity,
               ),
             );
           }).toList(),
