@@ -9,4 +9,5 @@ export 'src/orientation/size_extensions.dart';
 export 'src/theme/theme_config.dart';
 export 'src/widget/custom_text_field/custom_text_field.dart';
 export 'src/image_carousel/image_carousel.dart';
+export 'src/image_carousel/crop_config.dart';
 export 'src/svg_custom_painter/svg_custom_painter.dart';
