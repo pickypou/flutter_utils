@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_utils/flutter_utils.dart';
+import 'crop_config.dart';
 
 class ImageCarousel extends StatelessWidget {
   final List<String> imageUrl;
@@ -12,7 +13,7 @@ class ImageCarousel extends StatelessWidget {
   final List<CropConfig> cropConfigs;
 
   const ImageCarousel({
-    super.key,
+    Key? key,
     required this.imageUrl,
     required this.height,
     required this.fraction,
@@ -20,7 +21,7 @@ class ImageCarousel extends StatelessWidget {
     required this.isFromAssets,
     this.animation,
     this.cropConfigs = const [],
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,26 +51,21 @@ class ImageCarousel extends StatelessWidget {
             height: height,
             margin: const EdgeInsets.symmetric(horizontal: 5.0),
             decoration: const BoxDecoration(color: Colors.white),
-            child: ClipRect(
-              child: OverflowBox(
-                alignment: cropConfig.alignment,
-                maxWidth: double.infinity,
-                maxHeight: double.infinity,
-                child: SizedBox(
-                  width: size.width * (isLandscape ? fraction : 1) / cropConfig.widthFactor,
-                  height: height / cropConfig.heightFactor,
-                  child: animation ??
-                      (isFromAssets
-                          ? Image.asset(
-                        url,
-                        fit: BoxFit.cover,
-                      )
-                          : Image.network(
-                        url,
-                        fit: BoxFit.cover,
-                      )),
-                ),
-              ),
+            child: Center(
+              child: animation ??
+                  (isFromAssets
+                      ? Image.asset(
+                    url,
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: height,
+                  )
+                      : Image.network(
+                    url,
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: height,
+                  )),
             ),
           );
         }).toList(),
