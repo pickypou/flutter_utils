@@ -1,118 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 import 'crop_config.dart'; // Importez CropConfig
 
 class ImageCarousel extends StatelessWidget {
-  final List<String> imageUrls; // Liste des URLs ou chemins d'assets
-  final List<CropConfig> cropConfigs; // Configurations de recadrage
-  final double height; // Hauteur du carrousel
-  final double viewportFraction; // Fraction de la vue pour chaque image
-  final bool autoPlay; // Lecture automatique
-  final bool isFromAssets; // True pour les assets, false pour les URLs
-  final Duration autoPlayInterval; // Intervalle de lecture automatique
-  final Color indicatorColor; // Couleur des indicateurs
-  final ValueChanged<int>? onPageChanged; // Callback pour le changement de page
-  final GestureTapCallback? onImageTap; // Callback pour le clic sur une image
+  final List<String> imageUrl;
+  final double height;
+  final double fraction;
+  final bool autoPlay;
+  final bool isFromAssets;
+  final Widget? animation;
+  final List<CropConfig> cropConfigs; // Ajout des configurations de recadrage
 
   const ImageCarousel({
     super.key,
-    required this.imageUrls,
-    this.cropConfigs = const [],
-    this.height = 200,
-    this.viewportFraction = 1.0,
-    this.autoPlay = true,
-    this.isFromAssets = false,
-    this.autoPlayInterval = const Duration(seconds: 3),
-    this.indicatorColor = Colors.white,
-    this.onPageChanged,
-    this.onImageTap,
+    required this.imageUrl,
+    required this.height,
+    required this.fraction,
+    required this.autoPlay,
+    required this.isFromAssets,
+    this.animation,
+    this.cropConfigs = const [], // Liste vide par défaut
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CarouselSlider(
-          options: CarouselOptions(
-            height: height, // Hauteur du carrousel
-            viewportFraction: viewportFraction, // Largeur de chaque image
-            autoPlay: autoPlay, // Lecture automatique
-            autoPlayInterval: autoPlayInterval, // Intervalle de lecture
-            onPageChanged: (index, reason) {
-              if (onPageChanged != null) {
-                onPageChanged!(index); // Callback pour le changement de page
-              }
-            },
-          ),
-          items: imageUrls.asMap().entries.map((entry) {
-            final int index = entry.key;
-            final String url = entry.value;
+    final Size size = MediaQuery.sizeOf(context);
+    final bool isLandscape = size.orientation() == SizeOrientation.paysage;
 
-            // Appliquer un recadrage si une configuration existe pour cette image
-            final cropConfig = cropConfigs.firstWhere(
-                  (config) => config.index == index,
-              orElse: () => CropConfig(index: -1),
-            );
+    return OrientationSizeBox(
+      size: size,
+      fraction: fraction,
+      child: CarouselSlider(
+        options: CarouselOptions(
+          height: height,
+          viewportFraction: isLandscape ? fraction : 1.0,
+          autoPlay: autoPlay,
+        ),
+        items: imageUrl.asMap().entries.map((entry) {
+          final int index = entry.key;
+          final String url = entry.value;
 
-            return Container(
-              height: height, // Fixer la hauteur du conteneur
-              child: GestureDetector(
-                onTap: onImageTap, // Callback pour le clic sur une image
-                child: cropConfig.index != -1
-                    ? ClipRect(
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    heightFactor: cropConfig.heightFactor,
-                    child: Transform.translate(
-                      offset: Offset(0, cropConfig.offsetY),
-                      child: isFromAssets
-                          ? Image.asset(
-                        url,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                      )
-                          : Image.network(
-                        url,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                      ),
-                    ),
-                  ),
-                )
-                    : isFromAssets
-                    ? Image.asset(
-                  url,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                )
-                    : Image.network(
-                  url,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                ),
+          // Appliquer un recadrage si une configuration existe pour cette image
+          final cropConfig = cropConfigs.firstWhere(
+                (config) => config.index == index,
+            orElse: () => CropConfig(index: -1),
+          );
+
+          return Container(
+            width: size.width * (isLandscape ? fraction : 1),
+            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
+            child: ClipRect(
+              child: Transform.translate(
+                offset: Offset(0, cropConfig.offsetY),
+                child: animation ??
+                    (isFromAssets
+                        ? Image.asset(
+                      url,
+                      fit: BoxFit.cover,
+                    )
+                        : Image.network(
+                      url,
+                      fit: BoxFit.cover,
+                    )),
               ),
-            );
-          }).toList(),
-        ),
-        // Indicateurs (optionnel)
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: imageUrls.asMap().entries.map((entry) {
-            final int index = entry.key;
-            return Container(
-              width: 8,
-              height: 8,
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 2),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: indicatorColor.withOpacity(
-                  index == 0 ? 1.0 : 0.4, // Mettez en surbrillance l'indicateur actuel
-                ),
-              ),
-            );
-          }).toList(),
-        ),
-      ],
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 }
