@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
-
-
-
-import '../../flutter_utils.dart';class ImageCarousel extends StatelessWidget {
+class ImageCarousel extends StatelessWidget {
   final List<String> imageUrl;
   final double height;
   final double fraction;
   final bool autoPlay;
   final bool isFromAssets;
   final Widget? animation;
-  final List<CropConfig> cropConfigs; // Configurations de recadrage
+  final List<CropConfig> cropConfigs;
 
   const ImageCarousel({
     super.key,
@@ -21,7 +19,7 @@ import '../../flutter_utils.dart';class ImageCarousel extends StatelessWidget {
     required this.autoPlay,
     required this.isFromAssets,
     this.animation,
-    this.cropConfigs = const [], // Liste vide par défaut
+    this.cropConfigs = const [],
   });
 
   @override
@@ -57,9 +55,9 @@ import '../../flutter_utils.dart';class ImageCarousel extends StatelessWidget {
                 alignment: cropConfig.alignment,
                 maxWidth: double.infinity,
                 maxHeight: double.infinity,
-                child: FractionallySizedBox(
-                  widthFactor: 1 / cropConfig.widthFactor,
-                  heightFactor: 1 / cropConfig.heightFactor,
+                child: SizedBox(
+                  width: size.width * (isLandscape ? fraction : 1) / cropConfig.widthFactor,
+                  height: height / cropConfig.heightFactor,
                   child: animation ??
                       (isFromAssets
                           ? Image.asset(
