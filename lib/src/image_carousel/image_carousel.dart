@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_utils/flutter_utils.dart';
-import 'crop_config.dart'; // Importez CropConfig
 
-class ImageCarousel extends StatelessWidget {
+
+
+
+import '../../flutter_utils.dart';class ImageCarousel extends StatelessWidget {
   final List<String> imageUrl;
   final double height;
   final double fraction;
@@ -25,7 +26,7 @@ class ImageCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.sizeOf(context);
+    final Size size = MediaQuery.of(context).size;
     final bool isLandscape = size.orientation() == SizeOrientation.paysage;
 
     return OrientationSizeBox(
@@ -41,37 +42,33 @@ class ImageCarousel extends StatelessWidget {
           final int index = entry.key;
           final String url = entry.value;
 
-          // Appliquer un recadrage si une configuration existe pour cette image
           final cropConfig = cropConfigs.firstWhere(
                 (config) => config.index == index,
-            orElse: () => CropConfig(index: -1),
+            orElse: () => CropConfig(index: index),
           );
 
           return Container(
             width: size.width * (isLandscape ? fraction : 1),
+            height: height,
             margin: const EdgeInsets.symmetric(horizontal: 5.0),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-            ),
+            decoration: const BoxDecoration(color: Colors.white),
             child: ClipRect(
-              child: Align(
-                alignment: Alignment.topCenter,
-                heightFactor: cropConfig.heightFactor, // Utiliser heightFactor de CropConfig
-                child: Transform.translate(
-                  offset: Offset(0, cropConfig.offsetY),
+              child: OverflowBox(
+                alignment: cropConfig.alignment,
+                maxWidth: double.infinity,
+                maxHeight: double.infinity,
+                child: FractionallySizedBox(
+                  widthFactor: 1 / cropConfig.widthFactor,
+                  heightFactor: 1 / cropConfig.heightFactor,
                   child: animation ??
                       (isFromAssets
                           ? Image.asset(
                         url,
                         fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: height, // Hauteur fixe pour l'image
                       )
                           : Image.network(
                         url,
                         fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: height, // Hauteur fixe pour l'image
                       )),
                 ),
               ),
