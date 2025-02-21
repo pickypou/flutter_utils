@@ -54,18 +54,26 @@ class ImageCarousel extends StatelessWidget {
               color: Colors.white,
             ),
             child: ClipRect(
-              child: Transform.translate(
-                offset: Offset(0, cropConfig.offsetY),
-                child: animation ??
-                    (isFromAssets
-                        ? Image.asset(
-                      url,
-                      fit: BoxFit.cover,
-                    )
-                        : Image.network(
-                      url,
-                      fit: BoxFit.cover,
-                    )),
+              child: Align(
+                alignment: Alignment.topCenter,
+                heightFactor: 1.0, // Ajustez ce facteur pour recadrer l'image
+                child: Transform.translate(
+                  offset: Offset(0, cropConfig.offsetY),
+                  child: animation ??
+                      (isFromAssets
+                          ? Image.asset(
+                        url,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: height, // Hauteur fixe pour l'image
+                      )
+                          : Image.network(
+                        url,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: height, // Hauteur fixe pour l'image
+                      )),
+                ),
               ),
             ),
           );
