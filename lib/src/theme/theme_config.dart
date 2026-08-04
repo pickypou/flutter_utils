@@ -13,7 +13,7 @@ class ThemeConfig {
   // Styles de texte configurables
   static TextStyle titleStyle(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    double titleFontSize = size.width / 11;
+    double titleFontSize = (size.width / 11).clamp(24.0, 48.0);
 
     return GoogleFonts.getFont(fontFamily).copyWith(
       fontSize: titleFontSize,
@@ -25,7 +25,7 @@ class ThemeConfig {
 
   static TextStyle titleStyleLarge(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    double titleFontSize = size.width / 12;
+    double titleFontSize = (size.width / 12).clamp(22.0, 42.0);
 
     return GoogleFonts.getFont(fontFamily).copyWith(
       fontSize: titleFontSize,
@@ -37,7 +37,7 @@ class ThemeConfig {
 
   static TextStyle titleStyleMedium(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    double titleFontSize = size.width / 20;
+    double titleFontSize = (size.width / 20).clamp(18.0, 32.0);
 
     return GoogleFonts.getFont(fontFamily).copyWith(
       fontSize: titleFontSize,
@@ -49,7 +49,7 @@ class ThemeConfig {
 
   static TextStyle titleStyleSmall(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    double titleFontSize = size.width /50;
+    double titleFontSize = (size.width / 50).clamp(14.0, 24.0);
 
     return GoogleFonts.getFont(fontFamily).copyWith(
       fontSize: titleFontSize,
@@ -61,7 +61,7 @@ class ThemeConfig {
 
   static TextStyle textStyleText(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    double textFontSize = size.width / 90;
+    double textFontSize = (size.width / 90).clamp(12.0, 18.0);
 
     return GoogleFonts.getFont(fontFamily).copyWith(
       fontSize: textFontSize,

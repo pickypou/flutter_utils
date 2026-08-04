@@ -26,7 +26,7 @@ class ImageCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final bool isLandscape = size.orientation() == SizeOrientation.paysage;
+    final bool isLandscape = size.orientation() == SizeOrientation.landscape;
 
     return OrientationSizeBox(
       size: size,
@@ -46,26 +46,40 @@ class ImageCarousel extends StatelessWidget {
             orElse: () => CropConfig(index: index),
           );
 
+          Widget imageWidget = isFromAssets
+              ? Image.asset(
+                  url,
+                  fit: BoxFit.contain,
+                  width: double.infinity,
+                  height: height,
+                )
+              : Image.network(
+                  url,
+                  fit: BoxFit.contain,
+                  width: double.infinity,
+                  height: height,
+                );
+
+          if (cropConfig.widthFactor != 1.0 ||
+              cropConfig.heightFactor != 1.0 ||
+              cropConfig.alignment != Alignment.center) {
+            imageWidget = ClipRect(
+              child: Align(
+                alignment: cropConfig.alignment,
+                widthFactor: cropConfig.widthFactor,
+                heightFactor: cropConfig.heightFactor,
+                child: imageWidget,
+              ),
+            );
+          }
+
           return Container(
             width: size.width * (isLandscape ? fraction : 1),
             height: height,
             margin: const EdgeInsets.symmetric(horizontal: 5.0),
             decoration: const BoxDecoration(color: Colors.transparent),
             child: Center(
-              child: animation ??
-                  (isFromAssets
-                      ? Image.asset(
-                    url,
-                    fit: BoxFit.contain,
-                    width: double.infinity,
-                    height: height,
-                  )
-                      : Image.network(
-                    url,
-                    fit: BoxFit.contain,
-                    width: double.infinity,
-                    height: height,
-                  )),
+              child: animation ?? imageWidget,
             ),
           );
         }).toList(),

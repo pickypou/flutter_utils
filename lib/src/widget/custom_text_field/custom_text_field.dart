@@ -31,6 +31,8 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return TextField(
       controller: controller,
       keyboardType: keyboardType,
@@ -40,9 +42,9 @@ class CustomTextField extends StatelessWidget {
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         filled: true,
-        fillColor: fillColor ?? Colors.grey[200],
+        fillColor: fillColor ?? theme.inputDecorationTheme.fillColor ?? theme.colorScheme.surfaceContainerHighest,
         hintStyle: TextStyle(
-          color: hintColor ?? Colors.grey,
+          color: hintColor ?? theme.hintColor,
           fontSize: fontSize ?? 16,
         ),
         border: OutlineInputBorder(
@@ -55,7 +57,7 @@ class CustomTextField extends StatelessWidget {
             vertical: 16.0, horizontal: 12.0),
       ),
       style: TextStyle(
-        color: textColor ?? Colors.black87,
+        color: textColor ?? theme.textTheme.bodyLarge?.color,
         fontSize: fontSize ?? 16,
         fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily,
       ),

@@ -20,6 +20,34 @@ class BubbleConfig {
     this.textXOffset = 0, // Valeur par défaut
     this.textYOffset = 0, // Valeur par défaut
   });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is BubbleConfig &&
+      other.borderColor == borderColor &&
+      other.fillColor == fillColor &&
+      other.text == text &&
+      other.textStyle == textStyle &&
+      other.width == width &&
+      other.height == height &&
+      other.textXOffset == textXOffset &&
+      other.textYOffset == textYOffset;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      borderColor,
+      fillColor,
+      text,
+      textStyle,
+      width,
+      height,
+      textXOffset,
+      textYOffset,
+    );
+  }
 }
 
 class SvgCustomPainter extends CustomPainter {
@@ -83,5 +111,7 @@ class SvgCustomPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+  bool shouldRepaint(covariant SvgCustomPainter oldDelegate) {
+    return oldDelegate.config != config;
+  }
 }

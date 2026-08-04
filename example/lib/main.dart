@@ -1,8 +1,10 @@
 import 'package:example/example_svg_custom_painter/example_svg_custom_painter.dart';
 import 'package:example/models/hike.dart';
 import 'package:example/widget/example_custom_text_field/example_custom_text_field.dart';
+import 'package:example/widget/example_custom_button/example_custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/flutter_utils.dart';
+import 'package:example/widget/example_image_carousel/example_image_carousel.dart';
 
 import 'animation/example_animation.dart';
 
@@ -60,7 +62,11 @@ class MyHomePage extends StatelessWidget {
               const SizedBox(height: 50),
               const ExampleCustomTextField(),
               const SizedBox(height: 50),
-              const ExampleSvgCustomPainter()
+              const ExampleCustomButton(),
+              const SizedBox(height: 50),
+              const ExampleSvgCustomPainter(),
+              const SizedBox(height: 50),
+              const ExampleImageCarousel(),
             ],
           ),
         ),

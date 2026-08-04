@@ -10,7 +10,7 @@ class OrientationStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if ((orientation == SizeOrientation.paysage)) {
+    if ((orientation == SizeOrientation.landscape)) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: children,

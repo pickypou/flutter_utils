@@ -1,5 +1,15 @@
 import 'package:flutter/material.dart';
 
+/// A simple fade-in animation for any widget.
+///
+/// Example:
+/// ```dart
+/// AnimatedOpacityFade(
+///   duration: Duration(seconds: 2),
+///   curve: Curves.easeInOut,
+///   child: Image.asset('assets/photo.png'),
+/// )
+/// ```
 class AnimatedOpacityFade extends StatefulWidget {
   final Widget child;
   final Duration duration;
@@ -13,20 +23,23 @@ class AnimatedOpacityFade extends StatefulWidget {
   });
 
   @override
-  _AnimatedOpacityFadeState createState() => _AnimatedOpacityFadeState();
+  State<AnimatedOpacityFade> createState() => _AnimatedOpacityFadeState();
 }
 
-class _AnimatedOpacityFadeState extends State<AnimatedOpacityFade> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
+class _AnimatedOpacityFadeState extends State<AnimatedOpacityFade>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
+
     _controller = AnimationController(
       duration: widget.duration,
       vsync: this,
     );
+
     _animation = CurvedAnimation(
       parent: _controller,
       curve: widget.curve,
@@ -45,12 +58,10 @@ class _AnimatedOpacityFadeState extends State<AnimatedOpacityFade> with SingleTi
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animation,
-      builder: (context, child) {
-        return Opacity(
-          opacity: _animation.value,
-          child: child,
-        );
-      },
+      builder: (context, child) => Opacity(
+        opacity: _animation.value,
+        child: child,
+      ),
       child: widget.child,
     );
   }

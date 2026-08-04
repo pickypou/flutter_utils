@@ -1,120 +1,46 @@
- # flutter_utils
+# Flutter Utils
 
-'flutter_utils' est un package Flutter qui propose une collection de widgets réutilisables, d'animations et de fonctions utilitaires pour vous aider à simplifier votre processus de développement Flutter.
+A robust and reusable collection of Flutter widgets, animations, theme helpers, and utility functions designed to accelerate app development.
 
-## Fonctionnalités
+## Features
 
-- **Widget Personnalisables** : inclut des champs de saisie personnalisés, des carousel d'image, et d'autre composant d'interface utilisateur réutilisables.
-- **Gestion des Thèmes** : Permet de gérer et d'appliquer facilement des configurations de thème à travers votre application.
-- **Animations** : une collection d'animation fluide et persinnalisables pour améliorer l'experiance utilisateur.
+- **Theme Management**: Easily manage your app's global text scaling and colors.
+- **Image Carousel**: Configurable carousels with individual image cropping capabilities.
+- **Animations**: Ready-to-use animations like fade transitions and opacity fades.
+- **Custom Widgets**: Pre-built, customizable UI elements such as TextFields and SVG Painters.
+- **Orientation Utilities**: Extensions for Size to manage responsive layouts effortlessly.
+
+## Documentation
+
+Comprehensive documentation for each module can be found in the `doc/` directory:
+
+- [Theme Configuration](doc/theme_config.md)
+- [Image Carousel](doc/image_carousel.md)
+- [Animations](doc/animations.md)
+- [SVG Custom Painter](doc/svg_custom_painter.md)
+- [Custom TextField](doc/custom_text_field.md)
+- [Custom Button](doc/custom_button.md)
+- [Orientation & Size Extensions](doc/orientation_and_size.md)
 
 ## Installation
- Ajoutez la ligne suivante dans votre fichier 'pubspec.yaml' sous 'dependencies' : 
+
+Add this line to your `pubspec.yaml` (if published on pub.dev):
 
 ```yaml
- dependencies:
-   flutter_utils:
-     git:
-        url: https://github.com/pickypou/flutter_utils.git
-        ref: main
-```
-Ensuite, exécutez la commande :
-
- flutter pub get
- 
-## Utilisation
-
-1. **Configuration du Thème** :
-Vous pouvez configure un thème global pour votre application en utilisant 'ThemeConfig'. Voici un exemple :
-
-```dart
- import 'package:flutter/material.dart';
- import 'package:flutter_utils/flutter_utils.dart';
- 
- void main() {
- ThemeConfig.primaryColo = Colors.green;
- ThemeConfig.secondaryColor = Colors. red;
- ThemeConfig.textColor = Colors.black;
- ThemeConfig.fontFamily = 'Roboto';
- 
- runApp(const MyApp());
- }
- 
- class MyApp extends StatelessWidget {
-    const MyApp({super.key});
-    
-    @override
-    Widget build(BuildContext context) {
-    title: 'example flutter_utils';
-    theme: appTheme(context);
-    home: const MyHomePage();
-    }
- }
-```
-2.**Champ de saisie Personnalisé**
-Vous pouvez créer un champ de saisie personnalisé en quelque ligne de code:
-```dart
-import 'package:flutter/material.dart';
-import 'package:flutter_utils/flutter_utils.dart';
-
-class ExampleCustomTextField extends StatelessWidget {
-  const ExampleCustomTextField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      child: CustomTextField(
-        hintText: 'Votre Nom',
-        prefixIcon: const Icon(Icons.person),
-        fillColor: ThemeConfig.primaryColor,
-        textColor: ThemeConfig.secondaryColor,
-        hintColor: Colors.blue,
-        borderRadius: 12.0,
-        fontSize: 18,
-        keyboardType: TextInputType.text,
-        obscureText: false,
-      ),
-    );
-  }
-}
+dependencies:
+  flutter_utils: ^0.0.1
 ```
 
-3.**Carousel d'images**
-implantez un simple carousel d'images dans votre application : 
+Or reference it from your local path or git repository:
 
-```dart
-import 'package :flutter/material.dart';
-import 'package:flutter_utils/flutter_utils.dart';
-
-class ExampleImageCarousel extends StatelessWidget {
-  const ExampleImageCarousel({super.key});
-  
-  @override
-Widget build(BuildContext context) {
-    final List<String> images = [
-      'assets/images/img1.png',
-      'assets/images/img2.png',
-      'assets/images/img3.png'
-    ];
-    return Scafold(
-      body: Center(
-        child: ImageCarousel(
-          images: images,
-          height: 200.0,
-          wviewportFraction: 0.8,
-          autoPlay: true,
-        )
-      )
-    );
-  }
- }
+```yaml
+dependencies:
+  flutter_utils:
+    git:
+      url: https://github.com/pickypou/flutter_utils.git
+      ref: main
 ```
-**Projet Exemple**
-Pour plus d'exemples, consultez le répertoire example dans le dépôt. Vous pouvez exécuter le projet exemple pour voir tous les composants en action.
 
-**Contribution**
+## Example
 
-Les contribution sont les bien venues! Si vous trouvez un bug ou avez une suggestion de fonctionnalitté, n'hésitez pas à créé une issue ou à soumettre une pull request.
-
-**Licence**
-Ce projet est sous licence MIT. Voir le fichier LICENCE pour plus de détails.
+Check out the `example/` folder for a complete working example demonstrating how to use all the utilities included in this package.

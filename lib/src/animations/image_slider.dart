@@ -32,18 +32,26 @@ class _ImageSliderState extends State<ImageSlider> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Pré-charger les images pour éviter le clignotement blanc
+    for (String path in widget.imagePaths) {
+      precacheImage(AssetImage(path), context);
+    }
+  }
+
+  @override
   void dispose() {
     _timer?.cancel();
     super.dispose();
   }
 
   void _startImageChangeTimer() {
-    _timer = Timer(widget.duration, () {
+    _timer = Timer.periodic(widget.duration, (timer) {
       if (mounted) {
         setState(() {
           _currentIndex = (_currentIndex + 1) % widget.imagePaths.length;
         });
-        _startImageChangeTimer();
       }
     });
   }

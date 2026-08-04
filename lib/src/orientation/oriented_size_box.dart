@@ -15,7 +15,7 @@ class OrientedSizedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool fullHeight = size.orientation() == SizeOrientation.paysage;
+    bool fullHeight = size.orientation() == SizeOrientation.landscape;
     return SizedBox(
       width: size.width * (fullHeight ? fraction : 1),
       //height: fullHeight ? double.infinity : null,
