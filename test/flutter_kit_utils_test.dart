@@ -96,7 +96,7 @@ void main() {
       expect(customCrop.widthFactor, equals(0.8));
     });
 
-    test('BubbleConfig equality and hashCode', () {
+    test('BubbleConfig equality, hashCode and copyWith', () {
       final config1 = BubbleConfig(
         borderColor: Colors.black,
         text: 'Hello',
@@ -115,6 +115,20 @@ void main() {
 
       expect(config1, equals(config2));
       expect(config1.hashCode, equals(config2.hashCode));
+      expect(config1.type, equals(BubbleType.speech));
+      expect(config1.tailPosition, equals(BubbleTailPosition.bottomLeft));
+      expect(config1.strokeWidth, equals(2.0));
+
+      final config3 = config1.copyWith(
+        type: BubbleType.thought,
+        tailPosition: BubbleTailPosition.bottomRight,
+        fillColor: Colors.purple,
+      );
+      expect(config3.type, equals(BubbleType.thought));
+      expect(config3.tailPosition, equals(BubbleTailPosition.bottomRight));
+      expect(config3.fillColor, equals(Colors.purple));
+      expect(config3.text, equals('Hello'));
+      expect(config1 == config3, isFalse);
     });
   });
 
@@ -199,29 +213,79 @@ void main() {
       expect(find.text('Fade Transition'), findsOneWidget);
     });
 
-    testWidgets('SvgCustomPainter paints bubble and text without crashing',
+    testWidgets('SvgCustomPainter paints speech bubbles in all directions',
         (tester) async {
-      final config = BubbleConfig(
-        borderColor: Colors.blue,
-        fillColor: Colors.amber,
-        text: 'Bulle de test',
-        textStyle: const TextStyle(fontSize: 12, color: Colors.black),
-        width: 150,
-        height: 80,
-      );
+      for (final position in BubbleTailPosition.values) {
+        final config = BubbleConfig(
+          borderColor: Colors.blue,
+          fillColor: Colors.amber,
+          text: 'Speech $position',
+          textStyle: const TextStyle(fontSize: 12, color: Colors.black),
+          width: 150,
+          height: 80,
+          type: BubbleType.speech,
+          tailPosition: position,
+        );
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: CustomPaint(
-              size: const Size(150, 80),
-              painter: SvgCustomPainter(config: config),
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: CustomPaint(
+                size: const Size(150, 80),
+                painter: SvgCustomPainter(config: config),
+              ),
             ),
           ),
-        ),
-      );
+        );
 
-      expect(find.byType(CustomPaint), findsWidgets);
+        expect(find.byType(CustomPaint), findsWidgets);
+      }
+    });
+
+    testWidgets('SvgCustomPainter paints thought bubbles in all directions',
+        (tester) async {
+      for (final position in BubbleTailPosition.values) {
+        final config = BubbleConfig(
+          borderColor: Colors.indigo,
+          fillColor: Colors.white,
+          text: 'Thought $position',
+          textStyle: const TextStyle(fontSize: 12, color: Colors.black),
+          width: 150,
+          height: 80,
+          type: BubbleType.thought,
+          tailPosition: position,
+        );
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: CustomPaint(
+                size: const Size(150, 80),
+                painter: SvgCustomPainter(config: config),
+              ),
+            ),
+          ),
+        );
+
+        expect(find.byType(CustomPaint), findsWidgets);
+      }
+    });
+
+    test('SvgCustomPainter shouldRepaint test', () {
+      final config1 = BubbleConfig(
+        borderColor: Colors.blue,
+        text: 'A',
+        textStyle: const TextStyle(fontSize: 12),
+        width: 100,
+        height: 50,
+      );
+      final config2 = config1.copyWith(text: 'B');
+      final painter1 = SvgCustomPainter(config: config1);
+      final painter2 = SvgCustomPainter(config: config1);
+      final painter3 = SvgCustomPainter(config: config2);
+
+      expect(painter1.shouldRepaint(painter2), isFalse);
+      expect(painter1.shouldRepaint(painter3), isTrue);
     });
   });
 }

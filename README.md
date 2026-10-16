@@ -11,7 +11,7 @@ A robust and reusable collection of Flutter widgets, animations, orientation hel
 - **Theme Management**: Easily manage your app's global text scaling and colors.
 - **Image Carousel**: Configurable carousels with individual image cropping capabilities via `CropConfig`.
 - **Animations**: Ready-to-use animations like fade transitions and opacity fades.
-- **Custom Widgets**: Pre-built, customizable UI elements such as `CustomTextField`, `CustomButton`, and comic speech bubbles via `SvgCustomPainter`.
+- **Custom Widgets**: Pre-built, customizable UI elements such as `CustomTextField`, `CustomButton`, and comic speech & thought cloud bubbles via `SvgCustomPainter` (supporting multiple tail directions and trailing dots).
 - **Orientation Utilities**: Extensions for `Size` (`orientation()`, `max()`) and responsive layout widgets (`OrientationSizeBox`, `OrientationStack`).
 
 ## Documentation
@@ -21,7 +21,7 @@ Comprehensive documentation for each module can be found in the `doc/` directory
 - [Theme Configuration](doc/theme_config.md)
 - [Image Carousel](doc/image_carousel.md)
 - [Animations](doc/animations.md)
-- [SVG Custom Painter](doc/svg_custom_painter.md)
+- [SVG Custom Painter (Speech & Thought Bubbles)](doc/svg_custom_painter.md)
 - [Custom TextField](doc/custom_text_field.md)
 - [Custom Button](doc/custom_button.md)
 - [Orientation & Size Extensions](doc/orientation_and_size.md)
@@ -32,7 +32,7 @@ Add this line to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  flutter_kit_utils: ^0.0.1
+  flutter_kit_utils: ^0.1.0
 ```
 
 Or reference it from your git repository:

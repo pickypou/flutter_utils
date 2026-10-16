@@ -1,6 +1,34 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
-/// Configuration for styling and positioning a comic-style speech bubble.
+/// The style of the comic bubble.
+enum BubbleType {
+  /// A classic comic speech bubble with a pointy tail.
+  speech,
+
+  /// A cloud-like thought bubble with puffy lobes and trailing circles.
+  thought,
+}
+
+/// The position and direction of the bubble's tail or thought trail.
+enum BubbleTailPosition {
+  /// Tail pointing towards the bottom-left corner.
+  bottomLeft,
+
+  /// Tail pointing towards the bottom-right corner.
+  bottomRight,
+
+  /// Tail pointing towards the top-left corner.
+  topLeft,
+
+  /// Tail pointing towards the top-right corner.
+  topRight,
+
+  /// No tail (clean rounded oval or standalone cloud).
+  none,
+}
+
+/// Configuration for styling, shaping, and positioning a comic-style bubble.
 class BubbleConfig {
   /// The border outline color of the bubble.
   final Color borderColor;
@@ -26,6 +54,15 @@ class BubbleConfig {
   /// Vertical offset adjustment for the text inside the bubble.
   final double textYOffset;
 
+  /// The type of bubble: speech (pointy tail) or thought (cloud lobes).
+  final BubbleType type;
+
+  /// The position and direction of the bubble tail or thought trail.
+  final BubbleTailPosition tailPosition;
+
+  /// Border outline stroke width.
+  final double strokeWidth;
+
   /// Creates a [BubbleConfig] instance.
   BubbleConfig({
     required this.borderColor,
@@ -36,7 +73,39 @@ class BubbleConfig {
     required this.height,
     this.textXOffset = 0,
     this.textYOffset = 0,
+    this.type = BubbleType.speech,
+    this.tailPosition = BubbleTailPosition.bottomLeft,
+    this.strokeWidth = 2.0,
   });
+
+  /// Creates a copy of this [BubbleConfig] with the given fields replaced.
+  BubbleConfig copyWith({
+    Color? borderColor,
+    Color? fillColor,
+    String? text,
+    TextStyle? textStyle,
+    double? width,
+    double? height,
+    double? textXOffset,
+    double? textYOffset,
+    BubbleType? type,
+    BubbleTailPosition? tailPosition,
+    double? strokeWidth,
+  }) {
+    return BubbleConfig(
+      borderColor: borderColor ?? this.borderColor,
+      fillColor: fillColor ?? this.fillColor,
+      text: text ?? this.text,
+      textStyle: textStyle ?? this.textStyle,
+      width: width ?? this.width,
+      height: height ?? this.height,
+      textXOffset: textXOffset ?? this.textXOffset,
+      textYOffset: textYOffset ?? this.textYOffset,
+      type: type ?? this.type,
+      tailPosition: tailPosition ?? this.tailPosition,
+      strokeWidth: strokeWidth ?? this.strokeWidth,
+    );
+  }
 
   @override
   bool operator ==(Object other) {
@@ -49,7 +118,10 @@ class BubbleConfig {
         other.width == width &&
         other.height == height &&
         other.textXOffset == textXOffset &&
-        other.textYOffset == textYOffset;
+        other.textYOffset == textYOffset &&
+        other.type == type &&
+        other.tailPosition == tailPosition &&
+        other.strokeWidth == strokeWidth;
   }
 
   @override
@@ -63,11 +135,14 @@ class BubbleConfig {
       height,
       textXOffset,
       textYOffset,
+      type,
+      tailPosition,
+      strokeWidth,
     );
   }
 }
 
-/// A custom painter that draws a comic speech bubble according to a [BubbleConfig].
+/// A custom painter that draws a comic speech or thought bubble according to a [BubbleConfig].
 class SvgCustomPainter extends CustomPainter {
   /// The configuration defining colors, shape, and text of the bubble.
   final BubbleConfig config;
@@ -77,77 +152,27 @@ class SvgCustomPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
+    final strokePaint = Paint()
       ..color = config.borderColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0;
+      ..strokeWidth = config.strokeWidth;
 
     final fillPaint = Paint()
       ..color = config.fillColor
       ..style = PaintingStyle.fill;
 
-    final Path path = Path();
+    double textCenterX = size.width / 2;
+    double textCenterY = size.height / 2;
 
-    // Échelle basée sur la taille actuelle disponible (plus besoin de scaleX et scaleY)
-    double width = size.width;
-    double height = size.height;
+    if (config.type == BubbleType.thought) {
+      final centers = _drawThoughtBubble(canvas, size, strokePaint, fillPaint);
+      textCenterX = centers.dx;
+      textCenterY = centers.dy;
+    } else {
+      _drawSpeechBubble(canvas, size, strokePaint, fillPaint);
+    }
 
-    // Tracer la bulle proportionnellement à la nouvelle taille
-    path.moveTo(9.49 / 100 * width, 63.833 / 100 * height);
-    path.cubicTo(
-        7.997 / 100 * width,
-        63.833 / 100 * height,
-        6.547 / 100 * width,
-        63.593 / 100 * height,
-        5.181 / 100 * width,
-        63.12 / 100 * height);
-    path.lineTo(2.068 / 100 * width, 62.043 / 100 * height);
-    path.lineTo(4.46 / 100 * width, 59.778 / 100 * height);
-    path.cubicTo(
-        7.625 / 100 * width,
-        56.781 / 100 * height,
-        8.424 / 100 * width,
-        53.323 / 100 * height,
-        8.476 / 100 * width,
-        50.732 / 100 * height);
-    path.cubicTo(3.004 / 100 * width, 44.666 / 100 * height, 0,
-        37.097 / 100 * height, 0, 29.334 / 100 * height);
-    path.cubicTo(0, 10.311 / 100 * height, 20.645 / 100 * width,
-        0.834 / 100 * height, 50.333 / 100 * width, 0.834 / 100 * height);
-    path.cubicTo(
-        80.021 / 100 * width,
-        0.834 / 100 * height,
-        100.667 / 100 * width,
-        10.311 / 100 * height,
-        100.667 / 100 * width,
-        29.334 / 100 * height);
-    path.cubicTo(
-        100.667 / 100 * width,
-        48.356 / 100 * height,
-        80.021 / 100 * width,
-        63.832 / 100 * height,
-        50.333 / 100 * width,
-        63.832 / 100 * height);
-    path.cubicTo(
-        43.875 / 100 * width,
-        63.832 / 100 * height,
-        37.506 / 100 * width,
-        62.433 / 100 * height,
-        31.828 / 100 * width,
-        59.775 / 100 * height);
-    path.cubicTo(
-        18.689 / 100 * width,
-        61.289 / 100 * height,
-        14.366 / 100 * width,
-        63.833 / 100 * height,
-        9.49 / 100 * width,
-        63.833 / 100 * height);
-
-    path.close();
-    canvas.drawPath(path, fillPaint);
-    canvas.drawPath(path, paint);
-
-    // Ajouter le texte centré
+    // Centered text layout
     final textSpan = TextSpan(
       text: config.text,
       style: config.textStyle,
@@ -159,17 +184,205 @@ class SvgCustomPainter extends CustomPainter {
       textDirection: TextDirection.ltr,
     );
 
-    // Ajuster la largeur et la hauteur du texte pour qu'il tienne dans la bulle
     textPainter.layout(
-        minWidth: 0,
-        maxWidth: size.width * 0.8); // 80% de la largeur pour le texte
+      minWidth: 0,
+      maxWidth: size.width * 0.75,
+    );
 
-    // Calculer la position du texte au centre de la bulle
     final double textX =
-        (size.width - textPainter.width) / 2 + config.textXOffset;
+        textCenterX - (textPainter.width / 2) + config.textXOffset;
     final double textY =
-        (size.height - textPainter.height) / 2 + config.textYOffset;
+        textCenterY - (textPainter.height / 2) + config.textYOffset;
     textPainter.paint(canvas, Offset(textX, textY));
+  }
+
+  void _drawSpeechBubble(
+    Canvas canvas,
+    Size size,
+    Paint strokePaint,
+    Paint fillPaint,
+  ) {
+    if (config.tailPosition == BubbleTailPosition.none) {
+      final strokeInset = config.strokeWidth / 2;
+      final ovalRect = Rect.fromLTWH(
+        strokeInset,
+        strokeInset,
+        size.width - config.strokeWidth,
+        size.height - config.strokeWidth,
+      );
+      canvas.drawOval(ovalRect, fillPaint);
+      canvas.drawOval(ovalRect, strokePaint);
+      return;
+    }
+
+    canvas.save();
+    switch (config.tailPosition) {
+      case BubbleTailPosition.bottomLeft:
+        break;
+      case BubbleTailPosition.bottomRight:
+        canvas.translate(size.width, 0);
+        canvas.scale(-1, 1);
+        break;
+      case BubbleTailPosition.topLeft:
+        canvas.translate(0, size.height);
+        canvas.scale(1, -1);
+        break;
+      case BubbleTailPosition.topRight:
+        canvas.translate(size.width, size.height);
+        canvas.scale(-1, -1);
+        break;
+      case BubbleTailPosition.none:
+        break;
+    }
+
+    final path = Path();
+    final sx = size.width / 100.667;
+    final sy = size.height / 63.833;
+
+    path.moveTo(9.49 * sx, 63.833 * sy);
+    path.cubicTo(7.997 * sx, 63.833 * sy, 6.547 * sx, 63.593 * sy, 5.181 * sx,
+        63.12 * sy);
+    path.lineTo(2.068 * sx, 62.043 * sy);
+    path.lineTo(4.46 * sx, 59.778 * sy);
+    path.cubicTo(7.625 * sx, 56.781 * sy, 8.424 * sx, 53.323 * sy, 8.476 * sx,
+        50.732 * sy);
+    path.cubicTo(3.004 * sx, 44.666 * sy, 0, 37.097 * sy, 0, 29.334 * sy);
+    path.cubicTo(
+        0, 10.311 * sy, 20.645 * sx, 0.834 * sy, 50.333 * sx, 0.834 * sy);
+    path.cubicTo(80.021 * sx, 0.834 * sy, 100.667 * sx, 10.311 * sy,
+        100.667 * sx, 29.334 * sy);
+    path.cubicTo(100.667 * sx, 48.356 * sy, 80.021 * sx, 63.832 * sy,
+        50.333 * sx, 63.832 * sy);
+    path.cubicTo(43.875 * sx, 63.832 * sy, 37.506 * sx, 62.433 * sy,
+        31.828 * sx, 59.775 * sy);
+    path.cubicTo(18.689 * sx, 61.289 * sy, 14.366 * sx, 63.833 * sy, 9.49 * sx,
+        63.833 * sy);
+    path.close();
+
+    canvas.drawPath(path, fillPaint);
+    canvas.drawPath(path, strokePaint);
+    canvas.restore();
+  }
+
+  Offset _drawThoughtBubble(
+    Canvas canvas,
+    Size size,
+    Paint strokePaint,
+    Paint fillPaint,
+  ) {
+    final hasTail = config.tailPosition != BubbleTailPosition.none;
+
+    double cloudCx = size.width / 2;
+    double cloudCy = size.height / 2;
+    double rx = size.width * 0.42;
+    double ry = size.height * 0.38;
+
+    if (hasTail) {
+      switch (config.tailPosition) {
+        case BubbleTailPosition.bottomLeft:
+          cloudCx = size.width * 0.54;
+          cloudCy = size.height * 0.44;
+          rx = size.width * 0.42;
+          ry = size.height * 0.36;
+          break;
+        case BubbleTailPosition.bottomRight:
+          cloudCx = size.width * 0.46;
+          cloudCy = size.height * 0.44;
+          rx = size.width * 0.42;
+          ry = size.height * 0.36;
+          break;
+        case BubbleTailPosition.topLeft:
+          cloudCx = size.width * 0.54;
+          cloudCy = size.height * 0.56;
+          rx = size.width * 0.42;
+          ry = size.height * 0.36;
+          break;
+        case BubbleTailPosition.topRight:
+          cloudCx = size.width * 0.46;
+          cloudCy = size.height * 0.56;
+          rx = size.width * 0.42;
+          ry = size.height * 0.36;
+          break;
+        case BubbleTailPosition.none:
+          break;
+      }
+    }
+
+    const int lobes = 12;
+    const double dTheta = 2 * math.pi / lobes;
+    final cloudPath = Path();
+
+    final double startX = cloudCx + rx * math.cos(0);
+    final double startY = cloudCy + ry * math.sin(0);
+    cloudPath.moveTo(startX, startY);
+
+    for (int i = 0; i < lobes; i++) {
+      final double t1 = (i + 1) * dTheta;
+      final double tMid = (i + 0.5) * dTheta;
+      final double p1x = cloudCx + rx * math.cos(t1);
+      final double p1y = cloudCy + ry * math.sin(t1);
+
+      const double bulge = 1.25;
+      final double cpx = cloudCx + rx * bulge * math.cos(tMid);
+      final double cpy = cloudCy + ry * bulge * math.sin(tMid);
+      cloudPath.quadraticBezierTo(cpx, cpy, p1x, p1y);
+    }
+    cloudPath.close();
+
+    canvas.drawPath(cloudPath, fillPaint);
+    canvas.drawPath(cloudPath, strokePaint);
+
+    if (hasTail) {
+      late final List<Offset> circleCenters;
+      final List<double> radii = [
+        size.width * 0.045,
+        size.width * 0.030,
+        size.width * 0.018,
+      ];
+
+      switch (config.tailPosition) {
+        case BubbleTailPosition.bottomLeft:
+          circleCenters = [
+            Offset(size.width * 0.22, size.height * 0.78),
+            Offset(size.width * 0.14, size.height * 0.88),
+            Offset(size.width * 0.07, size.height * 0.95),
+          ];
+          break;
+        case BubbleTailPosition.bottomRight:
+          circleCenters = [
+            Offset(size.width * 0.78, size.height * 0.78),
+            Offset(size.width * 0.86, size.height * 0.88),
+            Offset(size.width * 0.93, size.height * 0.95),
+          ];
+          break;
+        case BubbleTailPosition.topLeft:
+          circleCenters = [
+            Offset(size.width * 0.22, size.height * 0.22),
+            Offset(size.width * 0.14, size.height * 0.12),
+            Offset(size.width * 0.07, size.height * 0.05),
+          ];
+          break;
+        case BubbleTailPosition.topRight:
+          circleCenters = [
+            Offset(size.width * 0.78, size.height * 0.22),
+            Offset(size.width * 0.86, size.height * 0.12),
+            Offset(size.width * 0.93, size.height * 0.05),
+          ];
+          break;
+        case BubbleTailPosition.none:
+          circleCenters = [];
+          break;
+      }
+
+      for (int i = 0; i < circleCenters.length; i++) {
+        final center = circleCenters[i];
+        final r = radii[i];
+        canvas.drawCircle(center, r, fillPaint);
+        canvas.drawCircle(center, r, strokePaint);
+      }
+    }
+
+    return Offset(cloudCx, cloudCy);
   }
 
   @override

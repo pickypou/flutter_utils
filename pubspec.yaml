@@ -1,6 +1,6 @@
 name: flutter_kit_utils
 description: A versatile collection of Flutter widgets, animations, orientation helpers, speech bubbles, and UI utilities to accelerate app development.
-version: 0.0.1
+version: 0.1.0
 homepage: https://github.com/pickypou/flutter_utils
 repository: https://github.com/pickypou/flutter_utils
 issue_tracker: https://github.com/pickypou/flutter_utils/issues
