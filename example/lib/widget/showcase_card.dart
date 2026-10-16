@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// A reusable glassmorphic showcase card for presenting package features with consistency.
+/// A reusable showcase card for presenting package features with consistency.
 class ShowcaseCard extends StatelessWidget {
   /// Header icon representing the feature.
   final IconData icon;
@@ -35,17 +35,17 @@ class ShowcaseCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFF1E293B).withValues(alpha: 0.8), // Slate 800
+        color: const Color(0xFF1E293B), // Solid Slate 800 (clean & soft)
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.08),
-          width: 1,
+          color: const Color(0xFF334155), // Slate 700
+          width: 1.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.3),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+            color: Colors.black.withValues(alpha: 0.25),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
@@ -67,7 +67,7 @@ class ShowcaseCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF6366F1).withValues(alpha: 0.4),
+                      color: const Color(0xFF6366F1).withValues(alpha: 0.35),
                       blurRadius: 8,
                       offset: const Offset(0, 4),
                     ),
@@ -102,13 +102,13 @@ class ShowcaseCard extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF6366F1).withValues(alpha: 0.15),
+                  color: const Color(0xFF6366F1).withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: const Color(0xFF6366F1).withValues(alpha: 0.4),
+                    color: const Color(0xFF818CF8),
+                    width: 1,
                   ),
                 ),
                 child: Text(
@@ -116,13 +116,13 @@ class ShowcaseCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFFA5B4FC), // Indigo 200
+                    color: Color(0xFFC7D2FE), // Indigo 100
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 18),
           const Divider(color: Color(0xFF334155), height: 1),
           const SizedBox(height: 20),
 

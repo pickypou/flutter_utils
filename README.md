@@ -3,8 +3,11 @@
 [![pub package](https://img.shields.io/pub/v/flutter_kit_utils.svg)](https://pub.dev/packages/flutter_kit_utils)
 [![pub points](https://img.shields.io/pub/points/flutter_kit_utils?color=2E8B57)](https://pub.dev/packages/flutter_kit_utils/score)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Live Web Demo](https://img.shields.io/badge/demo-Live%20Web%20Showcase-6366F1?logo=flutter&logoColor=white)](https://pickypou.github.io/flutter_utils/)
 
 A robust and reusable collection of Flutter widgets, animations, orientation helpers, speech bubbles, and utility functions designed to accelerate app development.
+
+> 🌐 **[Tester la Démo Web Interactive en direct](https://pickypou.github.io/flutter_utils/)** — Essayez les bulles BD & nuages de pensée, carrousels et animations directement dans votre navigateur sans rien installer !
 
 ## Features
 

@@ -1,0 +1,43 @@
+name: Deploy Web Showcase to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'example/**'
+      - 'lib/**'
+      - '.github/workflows/deploy_web.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          cd example && flutter pub get
+
+      - name: Build Web
+        run: |
+          cd example
+          flutter build web --base-href "/flutter_utils/" --release
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./example/build/web

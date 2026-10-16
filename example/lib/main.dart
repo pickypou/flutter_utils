@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Kit Utils - Vitrine Interactive',
       theme: appTheme(context).copyWith(
-        scaffoldBackgroundColor: const Color(0xFF0B0F19), // Deep Obsidian
+        scaffoldBackgroundColor: const Color(0xFF0F172A), // Soft Navy Slate 900
         colorScheme: const ColorScheme.dark(
           primary: Color(0xFF6366F1),
           secondary: Color(0xFF38BDF8),
