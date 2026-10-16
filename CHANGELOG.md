@@ -1,3 +1,13 @@
+## 0.1.1
+
+* **Live Web Demo**:
+  * Deployed full interactive Flutter Web demo on GitHub Pages.
+  * Added Live Web Showcase badges & links in `README.md`.
+* **Example Showcase Redesign**:
+  * Modernized example app with cohesive Slate 900 / Slate 800 theme.
+  * Added `ShowcaseCard` with custom icons, badges, and usage descriptions.
+  * Added automated GitHub Actions deployment workflow for GitHub Pages.
+
 ## 0.1.0
 
 * **Enhanced Comic Speech & Thought Bubbles (`SvgCustomPainter`)**:
