@@ -35,119 +35,94 @@ class _ExampleSvgCustomPainterState extends State<ExampleSvgCustomPainter> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(maxWidth: 600),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade900.withValues(alpha: 0.4),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Text(
-            'Bulles BD & Nuages de Pensée (SvgCustomPainter)',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // Type selector
+        Wrap(
+          alignment: WrapAlignment.center,
+          spacing: 12,
+          runSpacing: 8,
+          children: [
+            ChoiceChip(
+              label: const Text('💬 Bulle de parole (Speech)'),
+              selected: _selectedType == BubbleType.speech,
+              onSelected: (selected) {
+                if (selected) {
+                  setState(() => _selectedType = BubbleType.speech);
+                }
+              },
             ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'Bulle entièrement vectorielle sans dépendance SVG externe. Choisissez le type et l\'orientation de la queue :',
-            style: TextStyle(fontSize: 13, color: Colors.grey.shade400),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 20),
+            ChoiceChip(
+              label: const Text('💭 Nuage de pensée (Thought)'),
+              selected: _selectedType == BubbleType.thought,
+              onSelected: (selected) {
+                if (selected) {
+                  setState(() => _selectedType = BubbleType.thought);
+                }
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: 14),
 
-          // Type selector
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 12,
+        // Tail direction selector
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ChoiceChip(
-                label: const Text('💬 Bulle de parole (Speech)'),
-                selected: _selectedType == BubbleType.speech,
-                onSelected: (selected) {
-                  if (selected) {
-                    setState(() => _selectedType = BubbleType.speech);
-                  }
-                },
-              ),
-              ChoiceChip(
-                label: const Text('💭 Nuage de pensée (Thought)'),
-                selected: _selectedType == BubbleType.thought,
-                onSelected: (selected) {
-                  if (selected) {
-                    setState(() => _selectedType = BubbleType.thought);
-                  }
-                },
-              ),
+              _buildTailChip('Bas-Gauche', BubbleTailPosition.bottomLeft),
+              const SizedBox(width: 8),
+              _buildTailChip('Bas-Droite', BubbleTailPosition.bottomRight),
+              const SizedBox(width: 8),
+              _buildTailChip('Haut-Gauche', BubbleTailPosition.topLeft),
+              const SizedBox(width: 8),
+              _buildTailChip('Haut-Droite', BubbleTailPosition.topRight),
+              const SizedBox(width: 8),
+              _buildTailChip('Sans queue', BubbleTailPosition.none),
             ],
           ),
-          const SizedBox(height: 12),
+        ),
+        const SizedBox(height: 24),
 
-          // Tail direction selector
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildTailChip('Bas-Gauche', BubbleTailPosition.bottomLeft),
-                const SizedBox(width: 8),
-                _buildTailChip('Bas-Droite', BubbleTailPosition.bottomRight),
-                const SizedBox(width: 8),
-                _buildTailChip('Haut-Gauche', BubbleTailPosition.topLeft),
-                const SizedBox(width: 8),
-                _buildTailChip('Haut-Droite', BubbleTailPosition.topRight),
-                const SizedBox(width: 8),
-                _buildTailChip('Sans queue', BubbleTailPosition.none),
-              ],
-            ),
-          ),
-          const SizedBox(height: 24),
-
-          // Live bubble preview
-          Center(
-            child: SizedBox(
-              width: widget.width,
-              height: widget.height,
-              child: CustomPaint(
-                painter: SvgCustomPainter(
-                  config: BubbleConfig(
-                    type: _selectedType,
-                    tailPosition: _selectedTail,
-                    borderColor: _selectedType == BubbleType.speech
-                        ? Colors.amberAccent
-                        : Colors.cyanAccent,
-                    fillColor: _selectedType == BubbleType.speech
-                        ? const Color(0xFF2A2810)
-                        : const Color(0xFF0F2530),
-                    strokeWidth: 2.5,
-                    text: _selectedType == BubbleType.speech
-                        ? "Bonjour ! Je suis une bulle de dialogue avec une queue personnalisable."
-                        : "Hmm... Je suis un nuage de pensée avec des lobes soignés et des bulles descendantes !",
-                    textStyle: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      color: _selectedType == BubbleType.speech
-                          ? Colors.amber.shade100
-                          : Colors.cyan.shade100,
-                    ),
-                    width: widget.width,
-                    height: widget.height,
-                    textXOffset: widget.textXOffset,
-                    textYOffset: widget.textYOffset,
+        // Live bubble preview
+        Center(
+          child: SizedBox(
+            width: widget.width,
+            height: widget.height,
+            child: CustomPaint(
+              painter: SvgCustomPainter(
+                config: BubbleConfig(
+                  type: _selectedType,
+                  tailPosition: _selectedTail,
+                  borderColor: _selectedType == BubbleType.speech
+                      ? const Color(0xFFFBBF24) // Amber 400
+                      : const Color(0xFF38BDF8), // Sky 400
+                  fillColor: _selectedType == BubbleType.speech
+                      ? const Color(0xFF292518)
+                      : const Color(0xFF0C2433),
+                  strokeWidth: 2.5,
+                  text: _selectedType == BubbleType.speech
+                      ? "Bonjour ! Je suis une bulle BD dynamique avec queue orientable."
+                      : "Hmm... Je suis un nuage de pensée avec 12 lobes et bulles descendantes !",
+                  textStyle: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: _selectedType == BubbleType.speech
+                        ? const Color(0xFFFEF3C7)
+                        : const Color(0xFFE0F2FE),
                   ),
+                  width: widget.width,
+                  height: widget.height,
+                  textXOffset: widget.textXOffset,
+                  textYOffset: widget.textYOffset,
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
