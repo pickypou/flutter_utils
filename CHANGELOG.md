@@ -1,3 +1,12 @@
+## 0.1.2
+
+* **ImageSlider Enhancements**:
+  * Added remote network image support (`http://`, `https://`) in addition to local asset paths.
+* **Showcase Usability & Contrast**:
+  * Significantly enhanced contrast and readability of `ChoiceChip` widgets in the speech/thought bubble playground.
+  * Replaced example placeholder graphics with high-resolution photography.
+  * Added instant replay trigger for `AnimatedOpacityFade`.
+
 ## 0.1.1
 
 * **Live Web Demo**:
