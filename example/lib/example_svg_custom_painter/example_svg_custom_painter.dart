@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_utils/flutter_utils.dart';
-
+import 'package:flutter_kit_utils/flutter_kit_utils.dart';
 
 class ExampleSvgCustomPainter extends StatelessWidget {
   final double width;
@@ -13,7 +12,8 @@ class ExampleSvgCustomPainter extends StatelessWidget {
     this.width = 300,
     this.height = 150,
     this.textXOffset = 0,
-    this.textYOffset = -30, // Ajustez cette valeur pour déplacer le texte vers le haut
+    this.textYOffset =
+        -30, // Ajustez cette valeur pour déplacer le texte vers le haut
   });
 
   @override
@@ -26,8 +26,11 @@ class ExampleSvgCustomPainter extends StatelessWidget {
           config: BubbleConfig(
             borderColor: Colors.cyanAccent,
             fillColor: Colors.transparent,
-            text: "Je suis là pour vous aider à retrouver équilibre, relaxation & bien-être. Que vous souffriez de maux physiques ou émotionnels",
-            textStyle: const TextStyle(fontSize: 14,),
+            text:
+                "Je suis là pour vous aider à retrouver équilibre, relaxation & bien-être. Que vous souffriez de maux physiques ou émotionnels",
+            textStyle: const TextStyle(
+              fontSize: 14,
+            ),
             width: width,
             height: height,
             textXOffset: textXOffset,

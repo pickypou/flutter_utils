@@ -1,7 +1,9 @@
-name: flutter_utils
-description: "A new Flutter package project."
+name: flutter_kit_utils
+description: A versatile collection of Flutter widgets, animations, orientation helpers, speech bubbles, and UI utilities to accelerate app development.
 version: 0.0.1
-homepage:
+homepage: https://github.com/pickypou/flutter_utils
+repository: https://github.com/pickypou/flutter_utils
+issue_tracker: https://github.com/pickypou/flutter_utils/issues
 
 environment:
   sdk: ^3.5.1
@@ -11,7 +13,7 @@ dependencies:
   carousel_slider: ^5.0.0
   flutter:
     sdk: flutter
-  google_fonts: ^6.2.1
+  google_fonts: ">=6.2.1 <10.0.0"
 
 dev_dependencies:
   flutter_test:

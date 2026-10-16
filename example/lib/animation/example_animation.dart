@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_utils/flutter_utils.dart';
+import 'package:flutter_kit_utils/flutter_kit_utils.dart';
 
 class ExampleAnimation extends StatelessWidget {
   ExampleAnimation({super.key});
@@ -12,37 +12,32 @@ class ExampleAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Animations Example")),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Image Slider",
-              style: ThemeConfig.textStyleText(context),
-            ),
-            const SizedBox(height: 20),
-            ImageSlider(
-              imagePaths: images,
-              useFadeTransition: true,
-              duration: const Duration(seconds: 2),
-              curve: Curves.easeInOut,
-            ),
-            const SizedBox(height: 40),
-            Text(
-              "Animated Opacity Fade",
-              style: ThemeConfig.textStyleText(context),
-            ),
-            const SizedBox(height: 20),
-            AnimatedOpacityFade(
-              duration: const Duration(seconds: 2),
-              curve: Curves.easeInOut,
-              child: Image.asset("assets/images/img1.png"),
-            ),
-          ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Image Slider",
+          style: ThemeConfig.textStyleText(context),
         ),
-      ),
+        const SizedBox(height: 20),
+        ImageSlider(
+          imagePaths: images,
+          useFadeTransition: true,
+          duration: const Duration(seconds: 2),
+          curve: Curves.easeInOut,
+        ),
+        const SizedBox(height: 40),
+        Text(
+          "Animated Opacity Fade",
+          style: ThemeConfig.textStyleText(context),
+        ),
+        const SizedBox(height: 20),
+        AnimatedOpacityFade(
+          duration: const Duration(seconds: 2),
+          curve: Curves.easeInOut,
+          child: Image.asset("assets/images/img1.png"),
+        ),
+      ],
     );
   }
 }

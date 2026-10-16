@@ -1,5 +1,3 @@
-library flutter_utils;
-
 export 'src/animations/animated_opacity_fade.dart';
 export 'src/animations/fade_transition_fade.dart';
 export 'src/animations/image_slider.dart';

@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+/// A widget that cycles through a list of images automatically with smooth transitions.
 class ImageSlider extends StatefulWidget {
+  /// The asset image paths to display in the slider.
   final List<String> imagePaths;
+
+  /// Duration between image transitions.
   final Duration duration;
+
+  /// Animation curve used for the transition.
   final Curve curve;
+
+  /// Whether to apply a fade transition effect between slides.
   final bool useFadeTransition;
+
+  /// Optional width of the slider image.
   final double? width;
 
+  /// Creates an [ImageSlider] widget.
   const ImageSlider({
     super.key,
     required this.imagePaths,
@@ -18,7 +29,7 @@ class ImageSlider extends StatefulWidget {
   });
 
   @override
-  _ImageSliderState createState() => _ImageSliderState();
+  State<ImageSlider> createState() => _ImageSliderState();
 }
 
 class _ImageSliderState extends State<ImageSlider> {

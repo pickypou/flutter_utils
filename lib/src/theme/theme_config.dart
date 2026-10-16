@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// Global configuration helper for application typography and color styling.
 class ThemeConfig {
-  // Couleurs configurables
+  /// The primary color used across the theme.
   static Color primaryColor = Colors.green[50]!;
+
+  /// The secondary / accent color used for headers and titles.
   static Color secondaryColor = const Color(0xFF000000);
+
+  /// The default text color for body copy.
   static Color textColor = Colors.white;
 
-  // Police configurables
+  /// The default Google Font family name.
   static String fontFamily = 'Lora';
 
-  // Styles de texte configurables
+  /// Returns a responsive headline style computed from screen width.
   static TextStyle titleStyle(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     double titleFontSize = (size.width / 11).clamp(24.0, 48.0);
@@ -71,13 +76,14 @@ class ThemeConfig {
   }
 }
 
-// Thème général
+/// Global application theme generator integrating [ThemeConfig].
 ThemeData appTheme(BuildContext context) {
   return ThemeData(
     primaryColor: ThemeConfig.primaryColor,
     secondaryHeaderColor: ThemeConfig.secondaryColor,
     textTheme: TextTheme(
-      headlineLarge: ThemeConfig.titleStyle(context), // Passez directement un TextStyle
+      headlineLarge:
+          ThemeConfig.titleStyle(context), // Passez directement un TextStyle
     ),
   );
 }

@@ -1,18 +1,44 @@
 import 'package:flutter/material.dart';
 
+/// A customizable input text field widget wrapping Flutter's [TextField].
 class CustomTextField extends StatelessWidget {
+  /// The hint text placeholder displayed when input is empty.
   final String hintText;
+
+  /// Optional text editing controller to manage the input text.
   final TextEditingController? controller;
+
+  /// The keyboard type for the input field.
   final TextInputType keyboardType;
+
+  /// Whether the input characters should be hidden (for passwords).
   final bool obscureText;
+
+  /// Optional icon placed at the beginning of the text field.
   final Widget? prefixIcon;
+
+  /// Optional icon placed at the end of the text field.
   final Widget? suffixIcon;
+
+  /// Background fill color for the text field.
   final Color? fillColor;
+
+  /// Text color of the input text.
   final Color? textColor;
+
+  /// Color of the hint placeholder text.
   final Color? hintColor;
+
+  /// Border outline color.
   final Color? borderColor;
+
+  /// Border corner radius.
   final double? borderRadius;
+
+  /// Font size for the text and hint.
   final double? fontSize;
+
+  /// Creates a [CustomTextField] widget.
   const CustomTextField({
     super.key,
     required this.hintText,
@@ -26,13 +52,13 @@ class CustomTextField extends StatelessWidget {
     this.hintColor,
     this.borderColor,
     this.borderRadius,
-    this.fontSize
+    this.fontSize,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return TextField(
       controller: controller,
       keyboardType: keyboardType,
@@ -42,7 +68,9 @@ class CustomTextField extends StatelessWidget {
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         filled: true,
-        fillColor: fillColor ?? theme.inputDecorationTheme.fillColor ?? theme.colorScheme.surfaceContainerHighest,
+        fillColor: fillColor ??
+            theme.inputDecorationTheme.fillColor ??
+            theme.colorScheme.surfaceContainerHighest,
         hintStyle: TextStyle(
           color: hintColor ?? theme.hintColor,
           fontSize: fontSize ?? 16,
@@ -53,8 +81,8 @@ class CustomTextField extends StatelessWidget {
             color: borderColor ?? Colors.transparent,
           ),
         ),
-        contentPadding: const EdgeInsets.symmetric(
-            vertical: 16.0, horizontal: 12.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
       ),
       style: TextStyle(
         color: textColor ?? theme.textTheme.bodyLarge?.color,

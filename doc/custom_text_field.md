@@ -11,7 +11,7 @@ A flexible wrapper around Flutter's standard `TextField` designed to enforce a c
 ## Usage
 
 ```dart
-import 'package:flutter_utils/flutter_utils.dart';
+import 'package:flutter_kit_utils/flutter_kit_utils.dart';
 
 Widget buildTextField() {
   return CustomTextField(

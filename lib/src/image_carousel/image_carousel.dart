@@ -1,19 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_utils/flutter_utils.dart';
-import 'crop_config.dart';
+import 'package:flutter_kit_utils/flutter_kit_utils.dart';
 
+/// An image carousel widget supporting asset and network images, auto-play, and per-image crop configurations.
 class ImageCarousel extends StatelessWidget {
+  /// The image URLs or asset paths to display.
   final List<String> imageUrl;
+
+  /// The height of the carousel.
   final double height;
+
+  /// The fraction of the viewport that each item occupies.
   final double fraction;
+
+  /// Whether the carousel should automatically scroll.
   final bool autoPlay;
+
+  /// Whether the images are loaded from assets or from the network.
   final bool isFromAssets;
+
+  /// Optional widget to display in place of the image.
   final Widget? animation;
+
+  /// Optional list of crop configurations for specific images by index.
   final List<CropConfig> cropConfigs;
 
+  /// Creates an [ImageCarousel] widget.
   const ImageCarousel({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.height,
     required this.fraction,
@@ -21,11 +35,11 @@ class ImageCarousel extends StatelessWidget {
     required this.isFromAssets,
     this.animation,
     this.cropConfigs = const [],
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.sizeOf(context);
     final bool isLandscape = size.orientation() == SizeOrientation.landscape;
 
     return OrientationSizeBox(
@@ -42,7 +56,7 @@ class ImageCarousel extends StatelessWidget {
           final String url = entry.value;
 
           final cropConfig = cropConfigs.firstWhere(
-                (config) => config.index == index,
+            (config) => config.index == index,
             orElse: () => CropConfig(index: index),
           );
 

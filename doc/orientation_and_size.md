@@ -12,7 +12,7 @@ This module provides helpful extensions on `Size` to easily build responsive lay
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:flutter_utils/flutter_utils.dart';
+import 'package:flutter_kit_utils/flutter_kit_utils.dart';
 
 Widget build(BuildContext context) {
   Size size = MediaQuery.sizeOf(context);

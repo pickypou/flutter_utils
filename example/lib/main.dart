@@ -3,7 +3,7 @@ import 'package:example/models/hike.dart';
 import 'package:example/widget/example_custom_text_field/example_custom_text_field.dart';
 import 'package:example/widget/example_custom_button/example_custom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_utils/flutter_utils.dart';
+import 'package:flutter_kit_utils/flutter_kit_utils.dart';
 import 'package:example/widget/example_image_carousel/example_image_carousel.dart';
 
 import 'animation/example_animation.dart';
@@ -24,22 +24,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Explication pour flutter-utils',
+      title: 'Explication pour flutter_kit_utils',
       theme: appTheme(context),
-      home:  MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-   MyHomePage({super.key});
+  MyHomePage({super.key});
 // Simulons un objet 'Hike' pour l'exemple
   final Hike hike = Hike(
     id: '1',
     title: 'Randonnée en montagne',
     description: 'Une belle randonnée en montagne avec vue sur la vallée.',
     imgUrls: ['https://example.com/img1.jpg', 'https://example.com/img2.jpg'],
-
   );
   @override
   Widget build(BuildContext context) {
@@ -51,7 +50,7 @@ class MyHomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Comment me servir de flutter_utils',
+                'Comment me servir de flutter_kit_utils',
                 style: ThemeConfig.titleStyleMedium(context),
               ),
               const SizedBox(height: 50),
@@ -74,5 +73,3 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
-
-

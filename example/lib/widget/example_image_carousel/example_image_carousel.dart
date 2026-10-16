@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_utils/flutter_utils.dart';
+import 'package:flutter_kit_utils/flutter_kit_utils.dart';
 
 class ExampleImageCarousel extends StatelessWidget {
   const ExampleImageCarousel({super.key});

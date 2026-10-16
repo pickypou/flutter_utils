@@ -9,7 +9,7 @@ It prevents issues such as unreadably small text on mobile devices or excessivel
 Define your colors and fonts globally (or inject them via your app's initialization):
 
 ```dart
-import 'package:flutter_utils/flutter_utils.dart';
+import 'package:flutter_kit_utils/flutter_kit_utils.dart';
 
 void main() {
   ThemeConfig.primaryColor = Colors.yellow;

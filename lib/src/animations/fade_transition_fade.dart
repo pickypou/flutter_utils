@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 
+/// A widget that performs a smooth fade-in transition using [TweenAnimationBuilder].
 class FadeTransitionFade extends StatelessWidget {
+  /// The child widget to fade in.
   final Widget child;
+
+  /// The duration of the fade-in animation.
   final Duration duration;
+
+  /// The animation curve to use.
   final Curve curve;
 
+  /// Creates a [FadeTransitionFade] widget.
   const FadeTransitionFade({
     super.key,
     required this.child,

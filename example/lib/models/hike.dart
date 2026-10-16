@@ -4,11 +4,10 @@ class Hike {
   final String description;
   final List<String> imgUrls;
 
-
   Hike({
     required this.id,
     required this.title,
     required this.description,
-     required this.imgUrls,
-});
+    required this.imgUrls,
+  });
 }
