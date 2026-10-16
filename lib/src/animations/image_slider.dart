@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter/material.dart';
 
 /// A widget that cycles through a list of images automatically with smooth transitions.
+///
+/// Supports both local asset paths and remote network URLs (`http://`, `https://`).
 class ImageSlider extends StatefulWidget {
-  /// The asset image paths to display in the slider.
+  /// The image paths or URLs to display in the slider.
   final List<String> imagePaths;
 
   /// Duration between image transitions.
@@ -36,6 +38,9 @@ class _ImageSliderState extends State<ImageSlider> {
   int _currentIndex = 0;
   Timer? _timer;
 
+  bool _isNetwork(String path) =>
+      path.startsWith('http://') || path.startsWith('https://');
+
   @override
   void initState() {
     super.initState();
@@ -45,9 +50,13 @@ class _ImageSliderState extends State<ImageSlider> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Pré-charger les images pour éviter le clignotement blanc
+    // Pre-cache images to avoid white flash
     for (String path in widget.imagePaths) {
-      precacheImage(AssetImage(path), context);
+      if (_isNetwork(path)) {
+        precacheImage(NetworkImage(path), context);
+      } else {
+        precacheImage(AssetImage(path), context);
+      }
     }
   }
 
@@ -69,6 +78,8 @@ class _ImageSliderState extends State<ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
+    final currentPath = widget.imagePaths[_currentIndex];
+
     return AnimatedSwitcher(
       duration: widget.duration,
       switchInCurve: widget.curve,
@@ -81,12 +92,19 @@ class _ImageSliderState extends State<ImageSlider> {
               )
             : child;
       },
-      child: Image.asset(
-        widget.imagePaths[_currentIndex],
-        fit: BoxFit.cover,
-        key: ValueKey<int>(_currentIndex),
-        width: widget.width,
-      ),
+      child: _isNetwork(currentPath)
+          ? Image.network(
+              currentPath,
+              fit: BoxFit.cover,
+              key: ValueKey<int>(_currentIndex),
+              width: widget.width,
+            )
+          : Image.asset(
+              currentPath,
+              fit: BoxFit.cover,
+              key: ValueKey<int>(_currentIndex),
+              width: widget.width,
+            ),
     );
   }
 }

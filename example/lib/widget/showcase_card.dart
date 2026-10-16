@@ -102,7 +102,8 @@ class ShowcaseCard extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
                   color: const Color(0xFF6366F1).withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(20),

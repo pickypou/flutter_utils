@@ -12,9 +12,9 @@ class ExampleAnimation extends StatefulWidget {
 
 class _ExampleAnimationState extends State<ExampleAnimation> {
   final List<String> images = const [
-    'assets/images/img1.png',
-    'assets/images/img2.png',
-    'assets/images/img3.png',
+    'https://picsum.photos/id/1015/800/600',
+    'https://picsum.photos/id/1016/800/600',
+    'https://picsum.photos/id/1018/800/600',
   ];
 
   Key _fadeKey = UniqueKey();
@@ -29,9 +29,26 @@ class _ExampleAnimationState extends State<ExampleAnimation> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // ImageSlider
+        // Section A: ImageSlider
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.slideshow, color: Color(0xFF38BDF8), size: 20),
+            SizedBox(width: 8),
+            Text(
+              'Défilement automatique (ImageSlider)',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
         Container(
           constraints: const BoxConstraints(maxWidth: 420),
+          height: 220,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
@@ -47,52 +64,63 @@ class _ExampleAnimationState extends State<ExampleAnimation> {
           child: ImageSlider(
             imagePaths: images,
             useFadeTransition: true,
-            duration: const Duration(seconds: 2),
+            duration: const Duration(seconds: 3),
             curve: Curves.easeInOut,
           ),
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 32),
 
-        // AnimatedOpacityFade with replay action
+        // Section B: AnimatedOpacityFade with landscape photo and replay button
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-              decoration: BoxDecoration(
-                color: const Color(0xFF0F172A),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFF334155)),
-              ),
-              child: AnimatedOpacityFade(
-                key: _fadeKey,
-                duration: const Duration(milliseconds: 1200),
-                curve: Curves.easeOut,
-                child: const Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.auto_awesome,
-                        color: Color(0xFFA855F7), size: 18),
-                    SizedBox(width: 8),
-                    Text(
-                      'Texte animé avec AnimatedOpacityFade',
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
+            const Icon(Icons.blur_on, color: Color(0xFFA855F7), size: 20),
+            const SizedBox(width: 8),
+            const Flexible(
+              child: Text(
+                'Fondu progressif d\'image (AnimatedOpacityFade)',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 8),
             IconButton(
               tooltip: 'Rejouer l\'animation de fondu',
               icon: const Icon(Icons.refresh, color: Color(0xFF818CF8)),
               onPressed: _replayFade,
             ),
           ],
+        ),
+        const SizedBox(height: 12),
+        Container(
+          constraints: const BoxConstraints(maxWidth: 420),
+          height: 220,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.35),
+                blurRadius: 14,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: AnimatedOpacityFade(
+            key: _fadeKey,
+            duration: const Duration(milliseconds: 1800),
+            curve: Curves.easeInOut,
+            child: Image.network(
+              'https://picsum.photos/id/1018/800/600',
+              height: 220,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
       ],
     );

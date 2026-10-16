@@ -44,22 +44,18 @@ class _ExampleSvgCustomPainterState extends State<ExampleSvgCustomPainter> {
           spacing: 12,
           runSpacing: 8,
           children: [
-            ChoiceChip(
-              label: const Text('💬 Bulle de parole (Speech)'),
-              selected: _selectedType == BubbleType.speech,
-              onSelected: (selected) {
-                if (selected) {
-                  setState(() => _selectedType = BubbleType.speech);
-                }
+            _buildTypeChip(
+              label: '💬 Bulle de parole (Speech)',
+              isSelected: _selectedType == BubbleType.speech,
+              onSelected: () {
+                setState(() => _selectedType = BubbleType.speech);
               },
             ),
-            ChoiceChip(
-              label: const Text('💭 Nuage de pensée (Thought)'),
-              selected: _selectedType == BubbleType.thought,
-              onSelected: (selected) {
-                if (selected) {
-                  setState(() => _selectedType = BubbleType.thought);
-                }
+            _buildTypeChip(
+              label: '💭 Nuage de pensée (Thought)',
+              isSelected: _selectedType == BubbleType.thought,
+              onSelected: () {
+                setState(() => _selectedType = BubbleType.thought);
               },
             ),
           ],
@@ -126,16 +122,52 @@ class _ExampleSvgCustomPainterState extends State<ExampleSvgCustomPainter> {
     );
   }
 
+  Widget _buildTypeChip({
+    required String label,
+    required bool isSelected,
+    required VoidCallback onSelected,
+  }) {
+    return ChoiceChip(
+      label: Text(label),
+      selected: isSelected,
+      onSelected: (_) => onSelected(),
+      selectedColor: const Color(0xFF6366F1), // Vibrant Indigo
+      backgroundColor: const Color(0xFF0F172A), // Dark Slate
+      labelStyle: TextStyle(
+        fontSize: 13,
+        fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+        color: isSelected ? Colors.white : const Color(0xFFE2E8F0),
+      ),
+      side: BorderSide(
+        color: isSelected ? const Color(0xFF818CF8) : const Color(0xFF475569),
+        width: 1.2,
+      ),
+      checkmarkColor: Colors.white,
+    );
+  }
+
   Widget _buildTailChip(String label, BubbleTailPosition position) {
     final isSelected = _selectedTail == position;
     return ChoiceChip(
-      label: Text(label, style: const TextStyle(fontSize: 12)),
+      label: Text(label),
       selected: isSelected,
       onSelected: (selected) {
         if (selected) {
           setState(() => _selectedTail = position);
         }
       },
+      selectedColor: const Color(0xFF6366F1), // Vibrant Indigo
+      backgroundColor: const Color(0xFF0F172A), // Dark Slate
+      labelStyle: TextStyle(
+        fontSize: 12,
+        fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+        color: isSelected ? Colors.white : const Color(0xFFE2E8F0),
+      ),
+      side: BorderSide(
+        color: isSelected ? const Color(0xFF818CF8) : const Color(0xFF475569),
+        width: 1.2,
+      ),
+      checkmarkColor: Colors.white,
     );
   }
 }
