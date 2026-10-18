@@ -1,9 +1,9 @@
 # Flutter Kit Utils
 
-[![pub package](https://img.shields.io/pub/v/flutter_kit_utils.svg)](https://pub.dev/packages/flutter_kit_utils)
-[![pub points](https://img.shields.io/pub/points/flutter_kit_utils?color=2E8B57)](https://pub.dev/packages/flutter_kit_utils/score)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Live Web Demo](https://img.shields.io/badge/demo-Live%20Web%20Showcase-6366F1?logo=flutter&logoColor=white)](https://pickypou.github.io/flutter_utils/)
+[![Live Web Demo](https://img.shields.io/badge/🌐%20Démo%20Web-Tester%20en%20direct-6366F1?style=for-the-badge&logo=flutter&logoColor=white)](https://pickypou.github.io/flutter_utils/)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Code%20Source-24292e?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pickypou/flutter_utils)
+[![pub package](https://img.shields.io/pub/v/flutter_kit_utils.svg?style=for-the-badge)](https://pub.dev/packages/flutter_kit_utils)
+[![pub points](https://img.shields.io/pub/points/flutter_kit_utils?color=2E8B57&style=for-the-badge)](https://pub.dev/packages/flutter_kit_utils)
 
 A robust and reusable collection of Flutter widgets, animations, orientation helpers, speech bubbles, and utility functions designed to accelerate app development.
 
